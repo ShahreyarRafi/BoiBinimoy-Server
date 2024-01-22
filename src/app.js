@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const createError = require("http-errors");
 const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
-const { userRouer } = require("./src/routers/userRouter");
+
 
 
 // middleware
