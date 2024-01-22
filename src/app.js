@@ -7,6 +7,9 @@ const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
 
 
+const buyBookPostRoute = require("./Routes/BuyBooksRoutes/buyBookPostRoute");
+
+
 
 // middleware
 app.use(morgan("dev"));
@@ -25,6 +28,10 @@ app.use(limiter);
 app.get("/", (req, res) => {
     res.status(200).json({ message: "Welcome to My Boi binimoy Server" });
 });
+
+
+// buy books related apis
+app.use(buyBookPostRoute)
 
 
 app.get("*", (req, res) => {
