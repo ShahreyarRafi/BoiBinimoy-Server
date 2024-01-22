@@ -1,16 +1,22 @@
-const { mongoose } = require("mongoose");
-const { mongoDBUrl } = require("../../secret");
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-const dbConnection = async (options = {}) => {
-    try {
-        await mongoose.connect(mongoDBUrl, options);
-        console.log("Connection to MongoDB is successfully esablished");
-        mongoose.connection.on("error", (error) => {
-            console.error("MongoDB Connection error", error);
-        });
-    } catch (error) {
-        console.error("Couldnot conneciton to MongoDB: ", error.toString());
+const getConnectionString = () => {
+    let connectionURI;
+    if(process.env.NODE_ENV === 'development'){
+        connectionURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.3ml6twf.mongodb.net/?retryWrites=true&w=majority`;
+    } 
+    else {
+      connectionURI = process.env.DATABASE_PROD_URI;
     }
-};
+    return connectionURI;
+}
 
-module.exports = dbConnection;
+const connectToDB = async() => {
+    console.log('connecting to database ......');
+    const uri = getConnectionString();
+    await mongoose.connect(uri,{dbName: process.env.DB_NAME });
+    console.log('connected to database');
+}
+
+module.exports = connectToDB
