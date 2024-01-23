@@ -7,8 +7,7 @@ postBuyBookRoute.post('/api/v1/buyBook', async(req, res) => {
         const book = req.body;
         const newBook  = new BuyBooks(book);
         const result = await newBook.save();
-        console.log(result)
-        res.status(200).json(result);
+        res.send(result);
     }catch (error) {
         console.error('Error post book data:', error);
         res.status(500).json({ message: 'Internal server error' });
