@@ -7,7 +7,9 @@ const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
 
 
-const buyBookPostRoute = require("./Routes/BuyBooksRoutes/buyBookPostRoute");
+const postBuyBookRoute = require("./Routes/BuyBooksRoutes/postBuyBookRoute");
+const getAllBuyBooksRoute = require("./Routes/BuyBooksRoutes/getAllBuyBooksRoute");
+const getOneBookRoute = require("./Routes/BuyBooksRoutes/getOneBookRoute");
 
 
 
@@ -31,7 +33,9 @@ app.get("/", (req, res) => {
 
 
 // buy books related apis
-app.use(buyBookPostRoute)
+app.use(postBuyBookRoute)
+app.use(getAllBuyBooksRoute)
+app.use(getOneBookRoute)
 
 
 app.get("*", (req, res) => {

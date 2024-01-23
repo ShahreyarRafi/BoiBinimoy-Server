@@ -1,8 +1,8 @@
 const express = require('express');
 const BuyBooks = require('../../Models/buyBooks/buyBooks');
-const buyBookPostRoute = express.Router();
+const postBuyBookRoute = express.Router();
 
-buyBookPostRoute.post('/api/v1/buyBook', async(req, res) => {
+postBuyBookRoute.post('/api/v1/buyBook', async(req, res) => {
     try{
         const book = req.body;
         const newBook  = new BuyBooks(book);
@@ -15,4 +15,4 @@ buyBookPostRoute.post('/api/v1/buyBook', async(req, res) => {
     }
 });
 
-module.exports = buyBookPostRoute;
+module.exports = postBuyBookRoute;

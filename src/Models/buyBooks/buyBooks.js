@@ -3,6 +3,7 @@ const { Schema, model} = require('mongoose');
 const BuyBooksSchema = new Schema({
     title : {
         type: String,
+        required: true,
     },
     writer : {
         type: String,
