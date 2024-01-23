@@ -7,13 +7,9 @@ const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
 
 
-const postBuyBookRoute = require("./Routes/BuyBooksRoutes/postBuyBookRoute");
-const getAllBuyBooksRoute = require("./Routes/BuyBooksRoutes/getAllBuyBooksRoute");
-const getOneBookRoute = require("./Routes/BuyBooksRoutes/getOneBookRoute");
-const postUserRoute = require("./Routes/Users/postUserRoute");
-const getAllUserRoute = require("./Routes/Users/getAllUserRoute");
-const getOneUserRoute = require("./Routes/Users/getOneUserRoute");
 
+const { postUserRoute, getAllUserRoute, getOneUserRoute } = require("./Routes/Users/usersRoutes");
+const { postBuyBookRoute, getAllBuyBooksRoute, getOneBookRoute } = require("./Routes/BuyBooks/BuyBooksRoutes");
 
 
 // middleware
@@ -36,14 +32,14 @@ app.get("/", (req, res) => {
 
 
 // users related api's
-app.use(postUserRoute)
-app.use(getAllUserRoute)
-app.use(getOneUserRoute)
+app.use("/api/v1", postUserRoute)
+app.use( "/api/v1", getAllUserRoute)
+app.use("/api/v1", getOneUserRoute)
 
 // buy books related apis
-app.use(postBuyBookRoute)
-app.use(getAllBuyBooksRoute)
-app.use(getOneBookRoute)
+app.use( "/api/v1", postBuyBookRoute)
+app.use("/api/v1", getAllBuyBooksRoute)
+app.use("/api/v1", getOneBookRoute)
 
 
 
