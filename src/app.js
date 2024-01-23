@@ -7,6 +7,14 @@ const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
 
 
+const postBuyBookRoute = require("./Routes/BuyBooksRoutes/postBuyBookRoute");
+const getAllBuyBooksRoute = require("./Routes/BuyBooksRoutes/getAllBuyBooksRoute");
+const getOneBookRoute = require("./Routes/BuyBooksRoutes/getOneBookRoute");
+const postUserRoute = require("./Routes/Users/postUserRoute");
+const getAllUserRoute = require("./Routes/Users/getAllUserRoute");
+const getOneUserRoute = require("./Routes/Users/getOneUserRoute");
+
+
 
 // middleware
 app.use(morgan("dev"));
@@ -25,6 +33,18 @@ app.use(limiter);
 app.get("/", (req, res) => {
     res.status(200).json({ message: "Welcome to My Boi binimoy Server" });
 });
+
+
+// users related api's
+app.use(postUserRoute)
+app.use(getAllUserRoute)
+app.use(getOneUserRoute)
+
+// buy books related apis
+app.use(postBuyBookRoute)
+app.use(getAllBuyBooksRoute)
+app.use(getOneBookRoute)
+
 
 
 app.get("*", (req, res) => {
