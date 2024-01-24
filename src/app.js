@@ -5,11 +5,22 @@ const bodyParser = require("body-parser");
 const createError = require("http-errors");
 const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
+const cors = require("cors");
+const cookieParser = require('cookie-parser')
 
+const corsOptions = {
+  origin: ["*", "http://localhost:3000"],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser())
 
 
 const { postUserRoute, getAllUserRoute, getOneUserRoute } = require("./Routes/Users/usersRoutes");
 const { postBuyBookRoute, getAllBuyBooksRoute, getOneBookRoute } = require("./Routes/BuyBooks/BuyBooksRoutes");
+const jwtRoute = require("./Routes/jwt/jwtRoute");
 
 
 // middleware
@@ -31,6 +42,9 @@ app.get("/", (req, res) => {
 });
 
 
+// authentication routes
+app.use(jwtRoute);
+
 // users related api's
 app.use("/api/v1", postUserRoute)
 app.use( "/api/v1", getAllUserRoute)
@@ -40,6 +54,7 @@ app.use("/api/v1", getOneUserRoute)
 app.use( "/api/v1", postBuyBookRoute)
 app.use("/api/v1", getAllBuyBooksRoute)
 app.use("/api/v1", getOneBookRoute)
+
 
 
 

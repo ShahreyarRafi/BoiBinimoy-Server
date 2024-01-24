@@ -1,3 +1,4 @@
+const Users = require("../../Models/Users/Users");
 
 const getAllUsersController = async (req, res) => {
     try {
@@ -27,6 +28,11 @@ const getAllUsersController = async (req, res) => {
 const postUserController = async(req, res) =>{
     try{
         const user = req.body;
+        const query = { email: user.email };
+        const existingUser = await Users.findOne(query);
+        if (existingUser) {
+          return res.send({ message: 'user already exists', insertedId: null })
+        }
         const newUser  = new Users(user);
         const result = await newUser.save();
         res.send(result);

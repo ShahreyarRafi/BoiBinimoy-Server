@@ -1,5 +1,9 @@
+const { default: mongoose } = require("mongoose");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
+
 const getAllBuyBookController =  async (req, res) => {
     try {
+ 
       const result = await BuyBooks.find();
       res.send(result);
     } catch (error) {
@@ -23,6 +27,7 @@ const getOneBookController = async (req, res) => {
   const postBuyBookController = async(req, res) => {
     try{
         const book = req.body;
+        console.log(book);
         const newBook  = new BuyBooks(book);
         const result = await newBook.save();
         res.send(result);
@@ -32,4 +37,5 @@ const getOneBookController = async (req, res) => {
     }
 }
 
-  module.exports = { getAllBuyBookController, getOneBookController, postBuyBookController }
+
+module.exports = { getAllBuyBookController, getOneBookController, postBuyBookController }
