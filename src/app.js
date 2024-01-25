@@ -5,7 +5,23 @@ const bodyParser = require("body-parser");
 const createError = require("http-errors");
 const xss = require("xss-clean");
 const { rateLimit } = require("express-rate-limit");
+const cors = require("cors");
+const cookieParser = require('cookie-parser')
 
+const corsOptions = {
+  origin: ["*", "http://localhost:3000"],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser())
+
+
+const { postUserRoute, getAllUserRoute, getOneUserRoute, updateUserRoute } = require("./Routes/Users/usersRoutes");
+const { postBuyBookRoute, getAllBuyBooksRoute, getOneBookRoute, updateBuyBookRoute, deleteBuyBookRoute } = require("./Routes/BuyBooks/BuyBooksRoutes");
+const jwtRoute = require("./Routes/jwt/jwtRoute");
+const { getAllBannerDataRoute, getOneBannerRoute, postBannerRote, updateBannerRoute, deleteBannerRoute } = require("./Routes/BannerRoutes/BannerRoutes");
 const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
 
 
@@ -28,8 +44,33 @@ app.get("/", (req, res) => {
 });
 
 
+// authentication routes
+app.use(jwtRoute);
+
+
+
+// users related api's
+app.use("/api/v1", postUserRoute)
+app.use( "/api/v1", getAllUserRoute)
+app.use("/api/v1", getOneUserRoute)
+app.use("/api/v1", updateUserRoute)
+
+// buy books related apis
+app.use( "/api/v1", postBuyBookRoute)
+app.use("/api/v1", getAllBuyBooksRoute)
+app.use("/api/v1", getOneBookRoute)
+app.use("/api/v1", updateBuyBookRoute)
+app.use("/api/v1", deleteBuyBookRoute)
+
 // exchange books related api 
 app.use('/api/v1', exchangeBooksRouter)
+
+// Banner data related api's
+app.use("/api/v1", getAllBannerDataRoute)
+app.use("/api/v1", getOneBannerRoute)
+app.use("/api/v1", postBannerRote)
+app.use("/api/v1", updateBannerRoute)
+app.use("/api/v1", deleteBannerRoute)
 
 
 app.get("*", (req, res) => {
