@@ -1,19 +1,21 @@
 const express = require("express");
-const Users = require("../../Models/Users/Users");
-const mongoose  = require("mongoose");
-const { getAllUsersController, getOneUserController, postUserController } = require("../../Controller/UsersControllers/UsersControllers");
+const { getAllUsersController, getOneUserController, postUserController, updateUser } = require("../../Controller/UsersControllers/UsersControllers");
 
-
+// get all users
 const getAllUserRoute = express.Router();
 getAllUserRoute.get("/users", getAllUsersController);
 
-
+// get one user
 const getOneUserRoute = express.Router();
 getOneUserRoute.get("/users/:id", getOneUserController );
 
-
+// create a new user
 const postUserRoute = express.Router();
 postUserRoute.post("/users", postUserController );
 
+// update a user
+const updateUserRoute = express.Router();
+updateUserRoute.patch("/users/:id", updateUser );
 
-module.exports = { getAllUserRoute, getOneUserRoute, postUserRoute}
+
+module.exports = { getAllUserRoute, getOneUserRoute, postUserRoute, updateUserRoute}
