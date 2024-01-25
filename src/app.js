@@ -22,6 +22,7 @@ const { postUserRoute, getAllUserRoute, getOneUserRoute, updateUserRoute } = req
 const { postBuyBookRoute, getAllBuyBooksRoute, getOneBookRoute, updateBuyBookRoute, deleteBuyBookRoute } = require("./Routes/BuyBooks/BuyBooksRoutes");
 const jwtRoute = require("./Routes/jwt/jwtRoute");
 const { getAllBannerDataRoute, getOneBannerRoute, postBannerRote, updateBannerRoute, deleteBannerRoute } = require("./Routes/BannerRoutes/BannerRoutes");
+const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
 
 
 // middleware
@@ -61,6 +62,8 @@ app.use("/api/v1", getOneBookRoute)
 app.use("/api/v1", updateBuyBookRoute)
 app.use("/api/v1", deleteBuyBookRoute)
 
+// exchange books related api 
+app.use('/api/v1', exchangeBooksRouter)
 
 // Banner data related api's
 app.use("/api/v1", getAllBannerDataRoute)
