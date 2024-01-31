@@ -12,14 +12,23 @@ const UsersSchema = new Schema({
     image : {
         type: String,
     },
-    pagaddress : {
-        type: String,
+    address : {
+        type: Array,
     },
     phone : {
         type: Number,
     },
     date : {
         type: String,
+    },
+    isAdmin : {
+        type: Boolean,
+    },
+    isModarator : {
+        type: Boolean,
+    },
+    isBan : {
+        type: Boolean,
     },
     role : {
         type: Array
