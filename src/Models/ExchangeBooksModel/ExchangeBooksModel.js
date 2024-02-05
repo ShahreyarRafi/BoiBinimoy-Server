@@ -15,27 +15,19 @@ const ExchangeBooksSchema = new mongoose.Schema({
     language: String,
     pages: Number,
     publisher: String,
-    cover_type: String,
+    cover_type: Array,
     dimensions: Object,
+    time_frame: Number,
     edition : String,
-    format : String,
+    formats : Array,
     rating : Number,
     tags : Array,
-    is_bestseller : Boolean,
     cover_image : String,
     location : Object,
     originally_published_in : String,
-    language_versions : Array,
-    awards : Array,
-    readers_reviews : Array,
-    recommended_by : Array,
     release_date : String,
-    digital_formats : Array,
-    related_books : Array,
-    bookstore_links : Object,
     owner_social_media_links:Object
 });
 
 module.exports = mongoose.model('ExchangeBook', ExchangeBooksSchema);
-
 
