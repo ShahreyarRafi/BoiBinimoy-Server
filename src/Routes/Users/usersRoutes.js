@@ -7,7 +7,7 @@ getAllUserRoute.get("/users", getAllUsersController);
 
 // get one user
 const getOneUserRoute = express.Router();
-getOneUserRoute.get("/users/:id", getOneUserController );
+getOneUserRoute.get("/users/:email", getOneUserController );
 
 // create a new user
 const postUserRoute = express.Router();

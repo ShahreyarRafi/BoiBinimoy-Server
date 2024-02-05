@@ -15,8 +15,8 @@ const getAllUsersController = async (req, res) => {
 // get one user by id
 const getOneUserController = async (req, res) => {
   try {
-    const id = req.params.id;
-    const quary = { _id: new mongoose.Types.ObjectId(id) };
+    const email = req.params.email;
+    const quary = { email: email };
     const result = await Users.findOne(quary);
     res.send(result);
   } catch (error) {

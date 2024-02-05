@@ -29,7 +29,6 @@ const getOneBookController = async (req, res) => {
 const postBuyBookController = async (req, res) => {
   try {
     const book = req.body;
-    console.log(book);
     const newBook = new BuyBooks(book);
     const result = await newBook.save();
     res.send(result);
