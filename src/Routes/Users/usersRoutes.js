@@ -1,21 +1,23 @@
 const express = require("express");
-const { getAllUsersController, getOneUserController, postUserController, updateUser } = require("../../Controller/UsersControllers/UsersControllers");
+const {
+  getAllUsersController,
+  getOneUserController,
+  postUserController,
+  updateUser,
+} = require("../../Controller/UsersControllers/UsersControllers");
+const verifyAdmin = require("../../Middleware/VerifyAdmin/VerifyAdmin");
+const usersRoute = express.Router();
 
 // get all users
-const getAllUserRoute = express.Router();
-getAllUserRoute.get("/users", getAllUsersController);
+usersRoute.get("/users", getAllUsersController);
 
-// get one user
-const getOneUserRoute = express.Router();
-getOneUserRoute.get("/users/:email", getOneUserController );
+// get a user by id
+usersRoute.get("/users/:email", verifyAdmin, getOneUserController);
 
 // create a new user
-const postUserRoute = express.Router();
-postUserRoute.post("/users", postUserController );
+usersRoute.post("/users", postUserController);
 
 // update a user
-const updateUserRoute = express.Router();
-updateUserRoute.patch("/users/:id", updateUser );
+usersRoute.patch("/users/:id", updateUser);
 
-
-module.exports = { getAllUserRoute, getOneUserRoute, postUserRoute, updateUserRoute}
+module.exports = usersRoute;

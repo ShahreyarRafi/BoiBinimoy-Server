@@ -1,26 +1,26 @@
 const express = require("express");
-const BuyBooks = require("../../Models/buyBooks/buyBooks");
-const mongoose = require('mongoose');
-const { getAllBuyBookController, getOneBookController, postBuyBookController, updateBuyBook, deleteBuyBook } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
+const {
+  getAllBuyBookController,
+  getOneBookController,
+  postBuyBookController,
+  updateBuyBook,
+  deleteBuyBook,
+} = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
+const buyBookRouter = express.Router();
 
+// get all buy-books
+buyBookRouter.get("/buy-books", getAllBuyBookController);
 
-const getAllBuyBooksRoute = express.Router();
-getAllBuyBooksRoute.get("/buyBooks", getAllBuyBookController);
+// get a buy-books by id
+buyBookRouter.get("/buy-books/:id", getOneBookController);
 
+// add a buy-books
+buyBookRouter.post("/buy-books", postBuyBookController);
 
-const getOneBookRoute = express.Router();
-getOneBookRoute.get("/buyBooks/:id", getOneBookController );
+// update a buy-books
+buyBookRouter.patch("/buy-books/:id", updateBuyBook);
 
+// delete a buy-boks
+buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
 
-const postBuyBookRoute = express.Router();
-postBuyBookRoute.post('/buyBooks', postBuyBookController);
-
-
-const updateBuyBookRoute = express.Router();
-updateBuyBookRoute.patch('/buyBooks/:id', updateBuyBook);
-
-const deleteBuyBookRoute = express.Router();
-deleteBuyBookRoute.delete('/buyBooks/:id', deleteBuyBook);
-
-
-module.exports = { getAllBuyBooksRoute, getOneBookRoute , postBuyBookRoute, updateBuyBookRoute, deleteBuyBookRoute }
+module.exports = buyBookRouter;

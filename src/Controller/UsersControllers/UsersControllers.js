@@ -1,8 +1,7 @@
-const { default: mongoose } = require("mongoose");
 const Users = require("../../Models/Users/Users");
 
-// get all user
-const getAllUsersController = async (req, res) => {
+// controller for get all user
+exports.getAllUsersController = async (req, res) => {
   try {
     const result = await Users.find();
     res.send(result);
@@ -12,21 +11,31 @@ const getAllUsersController = async (req, res) => {
   }
 };
 
-// get one user by id
-const getOneUserController = async (req, res) => {
+// controller for get a user by email
+exports.getOneUserController = async (req, res) => {
   try {
-    const email = req.params.email;
-    const quary = { email: email };
-    const result = await Users.findOne(quary);
-    res.send(result);
+    const requestedEmail = req.params.email;
+    const requestedUser = await Users.findOne({ email: requestedEmail });
+
+    if (!requestedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const currentUser = req.user;
+
+    if (currentUser.isAdmin || currentUser._id.equals(requestedUser._id)) {
+      return res.send(requestedUser);
+    } else {
+      return res.status(403).json({ message: "Unauthorized access" });
+    }
   } catch (error) {
-    console.error("Error getting all users data:", error);
+    console.error("Error getting user data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// create new user
-const postUserController = async (req, res) => {
+// controller for  create new user
+exports.postUserController = async (req, res) => {
   try {
     const user = req.body;
     const query = { email: user.email };
@@ -43,24 +52,19 @@ const postUserController = async (req, res) => {
   }
 };
 
-// update user
-const updateUser = async (req, res) => {
+// controller for update user
+exports.updateUser = async (req, res) => {
   try {
-    const updateUser = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updateUser = await Users.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updateUser) {
-        res.status(404).json({ error: 'user not found' });
+      res.status(404).json({ error: "user not found" });
     } else {
-        res.json(updateUser);
+      res.json(updateUser);
     }
   } catch (error) {
     console.error("Error updating user data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-
-module.exports = {
-  getAllUsersController,
-  getOneUserController,
-  postUserController,
-  updateUser,
 };
