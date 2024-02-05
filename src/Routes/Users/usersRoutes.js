@@ -12,7 +12,6 @@ getOneUserRoute.get("/users/:email", getOneUserController );
 // create a new user
 const postUserRoute = express.Router();
 postUserRoute.post("/users", postUserController );
-
 // update a user
 const updateUserRoute = express.Router();
 updateUserRoute.patch("/users/:id", updateUser );
