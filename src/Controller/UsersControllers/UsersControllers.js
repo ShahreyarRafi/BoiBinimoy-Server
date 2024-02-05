@@ -1,8 +1,7 @@
-const { default: mongoose } = require("mongoose");
 const Users = require("../../Models/Users/Users");
 
-// get all user
-const getAllUsersController = async (req, res) => {
+// controller for get all user
+exports.getAllUsersController = async (req, res) => {
   try {
     const result = await Users.find();
     res.send(result);
@@ -12,21 +11,8 @@ const getAllUsersController = async (req, res) => {
   }
 };
 
-// get one user by id
-// const getOneUserController = async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     const quary = { _id: new mongoose.Types.ObjectId(id) };
-//     const result = await Users.findOne(quary);
-//     res.send(result);
-//   } catch (error) {
-//     console.error("Error getting all users data:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
-
-// get a user by email 
-const getOneUserController = async (req, res) => {
+// controller for get a user by email
+exports.getOneUserController = async (req, res) => {
   try {
     const requestedEmail = req.params.email;
     const requestedUser = await Users.findOne({ email: requestedEmail });
@@ -48,9 +34,8 @@ const getOneUserController = async (req, res) => {
   }
 };
 
-
-// create new user
-const postUserController = async (req, res) => {
+// controller for  create new user
+exports.postUserController = async (req, res) => {
   try {
     const user = req.body;
     const query = { email: user.email };
@@ -67,24 +52,19 @@ const postUserController = async (req, res) => {
   }
 };
 
-// update user
-const updateUser = async (req, res) => {
+// controller for update user
+exports.updateUser = async (req, res) => {
   try {
-    const updateUser = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updateUser = await Users.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updateUser) {
-        res.status(404).json({ error: 'user not found' });
+      res.status(404).json({ error: "user not found" });
     } else {
-        res.json(updateUser);
+      res.json(updateUser);
     }
   } catch (error) {
     console.error("Error updating user data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-
-module.exports = {
-  getAllUsersController,
-  getOneUserController,
-  postUserController,
-  updateUser,
 };

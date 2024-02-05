@@ -1,8 +1,8 @@
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
-// get all buy books
-const getAllBuyBookController = async (req, res) => {
+// controller for get all buy books
+exports.getAllBuyBookController = async (req, res) => {
   try {
     const result = await BuyBooks.find();
     res.send(result);
@@ -12,8 +12,8 @@ const getAllBuyBookController = async (req, res) => {
   }
 };
 
-// get one buy book
-const getOneBookController = async (req, res) => {
+// controller for get a buy book by id
+exports.getOneBookController = async (req, res) => {
   try {
     const id = req.params.id;
     const query = { _id: new mongoose.Types.ObjectId(id) };
@@ -25,8 +25,8 @@ const getOneBookController = async (req, res) => {
   }
 };
 
-// add a buy book
-const postBuyBookController = async (req, res) => {
+// controller for add a buy book
+exports.postBuyBookController = async (req, res) => {
   try {
     const book = req.body;
     const newBook = new BuyBooks(book);
@@ -38,8 +38,8 @@ const postBuyBookController = async (req, res) => {
   }
 };
 
-// update a buy book
-const updateBuyBook = async (req, res) => {
+// controller for update a buy book
+exports.updateBuyBook = async (req, res) => {
   try {
     const updateBuyBook = await BuyBooks.findByIdAndUpdate(
       req.params.id,
@@ -57,23 +57,16 @@ const updateBuyBook = async (req, res) => {
   }
 };
 
-const deleteBuyBook = async (req, res) => {
+// controller for delete a buy book
+exports.deleteBuyBook = async (req, res) => {
   try {
     const deleteBook = await BuyBooks.findByIdAndDelete(req.params.id);
-    if(!deleteBook){
-      res.status(404).json({error: "Book not found"})
-    } 
-    res.json(deleteBook)
+    if (!deleteBook) {
+      res.status(404).json({ error: "Book not found" });
+    }
+    res.json(deleteBook);
   } catch (error) {
     console.error("Error delete book data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
-};
-
-module.exports = {
-  getAllBuyBookController,
-  getOneBookController,
-  postBuyBookController,
-  updateBuyBook,
-  deleteBuyBook
 };
