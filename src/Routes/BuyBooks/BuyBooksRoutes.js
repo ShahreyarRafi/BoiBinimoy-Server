@@ -8,14 +8,19 @@ const {
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
 const buyBookRouter = express.Router();
 
-buyBookRouter.get("/buyBooks", getAllBuyBookController);
+// get all buy-books
+buyBookRouter.get("/buy-books/all", getAllBuyBookController);
 
-buyBookRouter.get("/buyBooks/:id", getOneBookController);
+// get a buy-books by id
+buyBookRouter.get("/buy-books/:id", getOneBookController);
 
-buyBookRouter.post("/buyBooks", postBuyBookController);
+// add a buy-books
+buyBookRouter.post("/buy-books", postBuyBookController);
 
-buyBookRouter.patch("/buyBooks/:id", updateBuyBook);
+// update a buy-books
+buyBookRouter.patch("/buy-books/:id", updateBuyBook);
 
-buyBookRouter.delete("/buyBooks/:id", deleteBuyBook);
+// delete a buy-boks
+buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
 
 module.exports = buyBookRouter;

@@ -9,18 +9,18 @@ const {
 const bannerRouter = express.Router();
 
 // get all banner
-bannerRouter.get("/bannerData", getAllBannerData);
+bannerRouter.get("/banner", getAllBannerData);
 
 // get a banner by id
-bannerRouter.get("/bannerData/:id", getOneBannerData);
+bannerRouter.get("/banner/:id", getOneBannerData);
 
 // post a banner
-bannerRouter.post("/bannerData", postBannerData);
+bannerRouter.post("/banner", postBannerData);
 
 // update a banner
-bannerRouter.patch("/bannerData/:id", updateBannerData);
+bannerRouter.patch("/banner/:id", updateBannerData);
 
 // delete a banner
-bannerRouter.delete("/bannerData/:id", deleteBannerData);
+bannerRouter.delete("/banner/:id", deleteBannerData);
 
 module.exports = bannerRouter;
