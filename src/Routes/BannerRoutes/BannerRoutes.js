@@ -1,30 +1,26 @@
 const express = require("express");
-const { deleteBannerData, getOneBannerData, postBannerData, updateBannerData, getAllBannerData } = require("../../Controller/BannerData/BannerData");
+const {
+  deleteBannerData,
+  getOneBannerData,
+  postBannerData,
+  updateBannerData,
+  getAllBannerData,
+} = require("../../Controller/BannerData/BannerData");
+const bannerRouter = express.Router();
 
+// get all banner
+bannerRouter.get("/bannerData", getAllBannerData);
 
-// get all data
-const getAllBannerDataRoute = express.Router();
-getAllBannerDataRoute.get("/bannerData",  getAllBannerData);
+// get a banner by id
+bannerRouter.get("/bannerData/:id", getOneBannerData);
 
-// get one data
-const getOneBannerRoute = express.Router();
-getOneBannerRoute.get("/bannerData/:id", getOneBannerData);
+// post a banner
+bannerRouter.post("/bannerData", postBannerData);
 
+// update a banner
+bannerRouter.patch("/bannerData/:id", updateBannerData);
 
-// post one banner
-const postBannerRote = express.Router();
-postBannerRote.post("/bannerData", postBannerData);
+// delete a banner
+bannerRouter.delete("/bannerData/:id", deleteBannerData);
 
-
-// update banner 
-const updateBannerRoute = express.Router();
-updateBannerRoute.patch("/bannerData/:id", updateBannerData);
-
-
-// delete banner 
-const deleteBannerRoute = express.Router();
-deleteBannerRoute.delete("/bannerData/:id", deleteBannerData)
-
-
-
-module.exports = { getAllBannerDataRoute, getOneBannerRoute, postBannerRote, updateBannerRoute, deleteBannerRoute}
+module.exports = bannerRouter;

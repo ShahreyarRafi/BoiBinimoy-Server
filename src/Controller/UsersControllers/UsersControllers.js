@@ -13,17 +13,41 @@ const getAllUsersController = async (req, res) => {
 };
 
 // get one user by id
+// const getOneUserController = async (req, res) => {
+//   try {
+//     const id = req.params.id;
+//     const quary = { _id: new mongoose.Types.ObjectId(id) };
+//     const result = await Users.findOne(quary);
+//     res.send(result);
+//   } catch (error) {
+//     console.error("Error getting all users data:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+// get a user by email 
 const getOneUserController = async (req, res) => {
   try {
-    const email = req.params.email;
-    const quary = { email: email };
-    const result = await Users.findOne(quary);
-    res.send(result);
+    const requestedEmail = req.params.email;
+    const requestedUser = await Users.findOne({ email: requestedEmail });
+
+    if (!requestedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const currentUser = req.user;
+
+    if (currentUser.isAdmin || currentUser._id.equals(requestedUser._id)) {
+      return res.send(requestedUser);
+    } else {
+      return res.status(403).json({ message: "Unauthorized access" });
+    }
   } catch (error) {
-    console.error("Error getting all users data:", error);
+    console.error("Error getting user data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 // create new user
 const postUserController = async (req, res) => {
