@@ -10,21 +10,21 @@ const {
 const exchangeBooksRouter = express.Router();
 
 // Get all exchangable books
-exchangeBooksRouter.get("/exchangableBooks", getAllBooks);
+exchangeBooksRouter.get("/exchange-books", getAllBooks);
 
 // Get a exchangable book by id
-exchangeBooksRouter.get("/exchangableBooks/:id", getBookById);
+exchangeBooksRouter.get("/exchange-books/:id", getBookById);
 
 // Add a exchangable book
-exchangeBooksRouter.post("/exchangableBooks", addBook);
+exchangeBooksRouter.post("/exchange-books", addBook);
 
 // Update a exchangable book
-exchangeBooksRouter.put("/exchangableBooks/:id", updateBook);
+exchangeBooksRouter.put("/exchange-books/:id", updateBook);
 
 // Delete a exchangable book
-exchangeBooksRouter.delete("/exchangableBooks/:id", deleteBook);
+exchangeBooksRouter.delete("/exchange-books/:id", deleteBook);
 
 // Delete all exchangable books (use with caution)
-exchangeBooksRouter.delete("/exchangableBooks", deleteAllBooks);
+exchangeBooksRouter.delete("/exchange-books", deleteAllBooks);
 
 module.exports = exchangeBooksRouter;

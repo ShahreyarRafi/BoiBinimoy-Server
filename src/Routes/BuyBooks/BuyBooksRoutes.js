@@ -9,7 +9,7 @@ const {
 const buyBookRouter = express.Router();
 
 // get all buy-books
-buyBookRouter.get("/buy-books/all", getAllBuyBookController);
+buyBookRouter.get("/buy-books", getAllBuyBookController);
 
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
