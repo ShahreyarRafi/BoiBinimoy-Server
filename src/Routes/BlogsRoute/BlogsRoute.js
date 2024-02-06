@@ -8,17 +8,17 @@ const blogsRouter = express.Router();
 blogsRouter.get('/blogs/', getAllBlogsController);
 
 
-// get a blog
+// get a blog by id
 blogsRouter.get('/blogs/:id', getOneBlogController);
 
 
 // create a blog
 blogsRouter.post('/blogs', createBlogController);
 
-// update a blog
+// update a blog by id
 blogsRouter.patch('/blogs/:id', updateBlogController);
 
-// delete a blog
+// delete a blog by id
 blogsRouter.delete('/blogs/:id', deleteBlogController)
 
 module.exports = blogsRouter;
