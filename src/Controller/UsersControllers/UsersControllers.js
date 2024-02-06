@@ -15,15 +15,14 @@ exports.getAllUsersController = async (req, res) => {
 exports.getOneUserController = async (req, res) => {
   try {
     const requestedEmail = req.params.email;
+    console.log("asdf", requestedEmail);
     const requestedUser = await Users.findOne({ email: requestedEmail });
 
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const currentUser = req.user;
-
-    if (currentUser.isAdmin || currentUser._id.equals(requestedUser._id)) {
+    if (requestedUser.isAdmin) {
       return res.send(requestedUser);
     } else {
       return res.status(403).json({ message: "Unauthorized access" });
