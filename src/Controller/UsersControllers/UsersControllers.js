@@ -20,14 +20,9 @@ exports.getOneUserController = async (req, res) => {
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    const currentUser = req.user;
-
-    if (currentUser.isAdmin || currentUser._id.equals(requestedUser._id)) {
-      return res.send(requestedUser);
-    } else {
-      return res.status(403).json({ message: "Unauthorized access" });
-    }
+    
+    res.send(requestedUser);
+  
   } catch (error) {
     console.error("Error getting user data:", error);
     res.status(500).json({ message: "Internal server error" });

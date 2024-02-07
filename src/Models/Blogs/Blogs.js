@@ -13,7 +13,7 @@ const BlogsSchema = new mongoose.Schema({
     publish_date: String,
     publish_time: String,
     title: String,
-    body: String,
+    body: Array,
     cover_image: String
 });
 
