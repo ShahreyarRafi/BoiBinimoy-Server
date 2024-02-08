@@ -1,41 +1,39 @@
 const mongoose = require('mongoose');
 
+
 const ExchangeBooksSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
     },
-    description: String,
     writer: String,
+    description: String,
     publication_year: Number,
-    condition: String,
-    owner: String,
-    owner_email: String,
-    exchange_status: String,
+    edition : String,
     language: String,
+    publisher: String,
+    format: String,
+    cover_type: String,
+    dimensions: String,
     pages: Number,
     publisher: String,
-    cover_type: String,
     dimensions: Object,
-    edition : String,
-    format : String,
+    size: Number,
+    time_frame: Number,
+    formats : Array,
     rating : Number,
     tags : Array,
-    is_bestseller : Boolean,
     cover_image : String,
+    condition: String,
+    exchange_status: String,
+    owner: String,
+    owner_email: String,
+    phone_number: Number,
     location : Object,
-    originally_published_in : String,
-    language_versions : Array,
-    awards : Array,
-    readers_reviews : Array,
-    recommended_by : Array,
-    release_date : String,
-    digital_formats : Array,
-    related_books : Array,
-    bookstore_links : Object,
-    owner_social_media_links:Object
 });
 
 module.exports = mongoose.model('ExchangeBook', ExchangeBooksSchema);
+
+// Update update 123
 
 
