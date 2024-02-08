@@ -23,6 +23,7 @@ const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksR
 const buyBookRouter = require("./Routes/BuyBooks/BuyBooksRoutes");
 const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
 const usersRoute = require("./Routes/Users/usersRoutes");
+const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 
 // middleware
 app.use(morgan("dev"));
@@ -56,6 +57,8 @@ app.use("/api/v1", exchangeBooksRouter);
 
 // buy book related apis
 app.use("/api/v1", buyBookRouter);
+
+app.use("/api/v1", categoryRouter);
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
