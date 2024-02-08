@@ -15,6 +15,7 @@ exports.getAllUsersController = async (req, res) => {
 exports.getOneUserController = async (req, res) => {
   try {
     const requestedEmail = req.params.email;
+    console.log("asdf", requestedEmail);
     const requestedUser = await Users.findOne({ email: requestedEmail });
 
     if (!requestedUser) {

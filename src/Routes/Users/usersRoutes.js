@@ -13,7 +13,7 @@ const usersRoute = express.Router();
 usersRoute.get("/users",  getAllUsersController);
 
 // get a user by id
-usersRoute.get("/users/:email",  getOneUserController);
+usersRoute.get("/users/:email", getOneUserController);
 
 // create a new user
 usersRoute.post("/users", postUserController);
