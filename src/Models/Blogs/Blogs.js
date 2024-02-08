@@ -12,8 +12,18 @@ const BlogsSchema = new mongoose.Schema({
     },
     publish_date: String,
     publish_time: String,
-    title: String,
-    body: Array,
+    title: {
+        type: String,
+        required: true
+    },
+    tags: Array,
+    category: {
+       type: String,
+       required: true
+    },
+    body: {
+        type: Array
+    },
     cover_image: String
 });
 
