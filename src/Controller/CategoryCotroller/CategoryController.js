@@ -1,64 +1,70 @@
 const Category = require("../../Models/Category/Category");
 
-// Controller functions for CRUD operations
-
-// Create a new category
+// Controller for creating a new category
 exports.createCategory = async (req, res) => {
   try {
-    const { name, title } = req.body;
-    const category = new Category({ name, title });
-    await category.save();
-    res.json(category);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const { category_name, category_image } = req.body;
+    const newCategory = await Category.create({
+      category_name,
+      category_image,
+    });
+    res.status(201).json(newCategory);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Read all categories
-exports.getAllCategories = async (req, res) => {
+// Controller for getting all categories
+exports.getAllCategory = async (req, res) => {
   try {
     const categories = await Category.find();
-    res.json(categories);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// get a category by category name
 exports.getCategoryByName = async (req, res) => {
   try {
-    const categoryName = req.params.name;
-    const category = await Category.findOne({ name: categoryName });
+    const categoryName = req.params.name.toLowerCase();
+    const category = await Category.findOne({ category_name: { $regex: new RegExp('^' + categoryName + '$', 'i') } });
     if (!category) {
-      return res.status(404).json({ message: "Category not found" });
+      return res.status(404).json({ message: 'Category not found' });
     }
-    res.json(category);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(200).json(category);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Update a category
+
+// Controller for updating a category by ID
 exports.updateCategory = async (req, res) => {
   try {
-    const { name, title } = req.body;
+    const { category_name, category_image } = req.body;
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
-      { name, title },
+      { category_name, category_image },
       { new: true }
     );
-    res.json(updatedCategory);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    if (!updatedCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json(updatedCategory);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// Delete a category
+// Controller for deleting a category by ID
 exports.deleteCategory = async (req, res) => {
   try {
-    await Category.findByIdAndDelete(req.params.id);
-    res.json({ message: "Category deleted" });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const deletedCategory = await Category.findByIdAndDelete(req.params.id);
+    if (!deletedCategory) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.status(200).json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

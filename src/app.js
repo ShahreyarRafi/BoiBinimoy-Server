@@ -25,6 +25,7 @@ const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
 const usersRoute = require("./Routes/Users/usersRoutes");
 const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
 const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
+const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 
 // middleware
 app.use(morgan("dev"));
@@ -59,15 +60,14 @@ app.use("/api/v1", exchangeBooksRouter);
 // request book exchange related apis
 app.use("/api/v1", requestBooksRouter);
 
-
 // buy book related apis
 app.use("/api/v1", buyBookRouter);
-
 
 // blogs related apis
 app.use("/api/v1/", blogsRouter);
 
-
+// category related apis
+app.use("/api/v1", categoryRouter);
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
