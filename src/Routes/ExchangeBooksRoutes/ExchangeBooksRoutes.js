@@ -11,7 +11,7 @@ const verifyToken = require("../../Middleware/verifyToken");
 const exchangeBooksRouter = express.Router();
 
 // Get all exchangable books
-exchangeBooksRouter.get("/exchange-books", verifyToken, getAllBooks);
+exchangeBooksRouter.get("/exchange-books", getAllBooks);
 
 // Get a exchangable book by id
 exchangeBooksRouter.get("/exchange-books/:id", getBookById);
