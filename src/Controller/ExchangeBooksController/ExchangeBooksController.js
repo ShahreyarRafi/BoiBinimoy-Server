@@ -13,6 +13,7 @@ exports.getAllBooks = async (req, res) => {
 // controller for get a exchange book  by id
 exports.getBookById = async (req, res) => {
   try {
+   
     const book = await ExchangeBooks.findById(req.params.id);
     if (!book) {
       res.status(404).json({ error: "Book not found" });
@@ -21,6 +22,24 @@ exports.getBookById = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+
+// controller for get individual exchange book  by id
+exports.getIndividualExchangeBooks = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const query = {owner_email: email}
+    const books = await ExchangeBooks.find(query);
+    if (!books) {
+      res.status(404).json({ error: "Book not found" });
+    } else {
+      res.json(books);
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log(err);
   }
 };
 

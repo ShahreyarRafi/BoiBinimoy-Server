@@ -34,6 +34,7 @@ exports.getOneUserController = async (req, res) => {
 exports.postUserController = async (req, res) => {
   try {
     const user = req.body;
+    console.log(user);
     const query = { email: user.email };
     const existingUser = await Users.findOne(query);
     if (existingUser) {

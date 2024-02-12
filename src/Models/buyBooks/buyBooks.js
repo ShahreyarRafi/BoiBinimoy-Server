@@ -3,11 +3,11 @@ const { Schema, model } = require('mongoose');
 const BuyBooksSchema = new Schema({
     title: {
         type: String,
-        // required: true,
+        required: true,
     },
     description: {
         type: String,
-        // required: true,
+        required: true,
     },
     writer: {
         type: String,
@@ -23,11 +23,11 @@ const BuyBooksSchema = new Schema({
     },
     pages: {
         type: Number,
-        // required: true,
+        required: true,
     },
     price: {
         type: Number,
-        // required: true,
+        required: true,
     },
     publisher: {
         type: String,
@@ -47,7 +47,7 @@ const BuyBooksSchema = new Schema({
     },
     owner_email: {
         type: String,
-        // required: true
+        required: true
     },
     stock_limit: {
         type: Number,
@@ -78,7 +78,7 @@ const BuyBooksSchema = new Schema({
     },
     cover_image: {
         type: String,
-        // required: true
+        required: true
     },
     awards: {
         type: [String],
