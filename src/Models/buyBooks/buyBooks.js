@@ -91,8 +91,8 @@ const BuyBooksSchema = new Schema({
   },
   format_details: {
     type: {
-      ebook: "",
-      audio_book: "",
+      ebook: String,
+      audio_book: String,
       audio_book_narrator: String,
     },
   },
