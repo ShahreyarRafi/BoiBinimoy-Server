@@ -27,7 +27,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "User password is required"],
+      // required: [true, "User password is required"],
       minlenght: [6, "User password length can be minimum 6 characters"],
       set: (v) => bcrypt.hashSync(v, bcrypt.genSaltSync(10)),
     },
@@ -36,7 +36,7 @@ const userSchema = new Schema(
     },
     image: {
       type: String,
-      default: "userProfile",
+      default: "https://i.ibb.co/8zx0Bd0/placeholder.png"
     },
     gender: {
       type: String,

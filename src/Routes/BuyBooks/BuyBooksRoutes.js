@@ -5,6 +5,7 @@ const {
   postBuyBookController,
   updateBuyBook,
   deleteBuyBook,
+  getIndividualBookController
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
 const buyBookRouter = express.Router();
 
@@ -13,6 +14,9 @@ buyBookRouter.get("/buy-books", getAllBuyBookController);
 
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
+
+// get individual buy-books by email
+buyBookRouter.get("/buy-books-individual/:email", getIndividualBookController);
 
 // add a buy-books
 buyBookRouter.post("/buy-books", postBuyBookController);

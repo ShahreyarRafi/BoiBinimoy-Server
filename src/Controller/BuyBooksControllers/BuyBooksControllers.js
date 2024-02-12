@@ -12,6 +12,7 @@ exports.getAllBuyBookController = async (req, res) => {
   }
 };
 
+
 // controller for get a buy book by id
 exports.getOneBookController = async (req, res) => {
   try {
@@ -25,6 +26,18 @@ exports.getOneBookController = async (req, res) => {
   }
 };
 
+// controller for get a buy book by id
+exports.getIndividualBookController = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const query = { owner_email: email };
+    const result = await BuyBooks.find(query);
+    res.send(result);
+  } catch (error) {
+    console.error("Error getting one book data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 // controller for add a buy book
 exports.postBuyBookController = async (req, res) => {
   try {
