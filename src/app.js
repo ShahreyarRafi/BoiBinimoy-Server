@@ -34,6 +34,7 @@ const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
 const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 const writerRouter = require("./Routes/WriterRouters/WriterRouters");
 const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
+const reviewsRouter = require("./Routes/ReviewsRoutes/ReviewsRoutes");
 
 // middleware
 app.use(morgan("dev"));
@@ -70,6 +71,9 @@ app.use("/api/v1", requestBooksRouter);
 
 // buy book related apis
 app.use("/api/v1", buyBookRouter);
+
+// reviews of buy book related apis
+app.use("/api/v1", reviewsRouter);
 
 // blogs related apis
 app.use("/api/v1/", blogsRouter);

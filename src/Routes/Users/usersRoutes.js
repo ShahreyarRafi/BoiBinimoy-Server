@@ -13,6 +13,12 @@ const usersRoute = express.Router();
 // get all users
 usersRoute.get("/users",  getAllUsersController);
 
+// get all users
+usersRoute.get("/all-users", async(req, res) => {
+  const result = await Users.find();
+  res.send(result);
+});
+
 // get a user by id
 usersRoute.get("/users/:email", getOneUserController);
 
