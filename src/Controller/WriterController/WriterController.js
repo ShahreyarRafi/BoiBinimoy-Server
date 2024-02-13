@@ -52,3 +52,16 @@ exports.updateWriter = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+exports.deleteWriter = async (req, res) => {
+  try {
+    const deleteWriter = await Writers.findByIdAndDelete(req.params.id);
+    if (!deleteWriter) {
+      res.status(404).json({ error: "Writer not found" });
+    } else {
+      res.json({ message: "Writer Deleted Successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
