@@ -2,9 +2,39 @@ const Users = require("../../Models/Users/Users");
 
 // controller for get all user
 exports.getAllUsersController = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 14;
   try {
-    const result = await Users.find();
-    res.send(result);
+    const totalUser = await Users.countDocuments();
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const pagination = {};
+    if (endIndex < totalUser) {
+      pagination.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    const aggregationPipline = [
+      {
+        $skip: startIndex,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    const users = await Users.aggregate(aggregationPipline)
+
+    res.send({totalUser, users });
+
   } catch (error) {
     console.error("Error getting all users data:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -21,9 +51,8 @@ exports.getOneUserController = async (req, res) => {
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
     res.send(requestedUser);
-  
   } catch (error) {
     console.error("Error getting user data:", error);
     res.status(500).json({ message: "Internal server error" });
