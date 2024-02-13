@@ -17,7 +17,7 @@ exports.getPublisherById = async (req, res) => {
     if (!aPublisher) {
       res.status(404).json({ error: "Publisher not found" });
     } else {
-      res.jso(aPublisher);
+      res.json(aPublisher);
     }
   } catch (error) {
     res.status(500).josn({ error: err.message });
@@ -26,6 +26,17 @@ exports.getPublisherById = async (req, res) => {
 
 // add a publisher
 exports.addPublisher = async (req, res) => {
+  const newPublisher = new publisher(req.body);
+  try {
+    const savePublisher = await newPublisher.save();
+    res.status(201).json(savePublisher);
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// update a publisher
+exports.updatePublisher = async (req, res) => {
   try {
     const updatedPublisher = await publisher.findByIdAndUpdate(
       req.params.id,

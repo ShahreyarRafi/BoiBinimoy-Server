@@ -4,6 +4,7 @@ const {
   getPublisherById,
   addPublisher,
   deletePublisher,
+  updatePublisher,
 } = require("../../Controller/PublisherController/PublisherController");
 const publisherRouter = express.Router();
 
@@ -17,9 +18,9 @@ publisherRouter.get("/publishers/:id", getPublisherById);
 publisherRouter.post("/publishers", addPublisher);
 
 // update a publisher router
-publisherRouter.patch("/publishers/:id", addPublisher);
+publisherRouter.patch("/publishers/:id", updatePublisher);
 
 // delete a publisher router
-publisherRouter.delete("/publisher/:id", deletePublisher);
+publisherRouter.delete("/publishers/:id", deletePublisher);
 
 module.exports = publisherRouter;
