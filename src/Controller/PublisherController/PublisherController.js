@@ -41,3 +41,17 @@ exports.addPublisher = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+// delete a publisher
+exports.deletePublisher = async (req, res) => {
+  try {
+    const deletedPublisher = await publisher.findByIdAndDelete(req.params.id);
+    if (!deletedPublisher) {
+      res.status(404).json({ error: "Publisher not found" });
+    } else {
+      res.json({ message: "Publisher Deleted Successfully" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: err.message });
+  }
+};
