@@ -34,3 +34,21 @@ exports.addWriter = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// update writer
+exports.updateWriter = async (req, res) => {
+  try {
+    const updatedWriter = await Writers.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedWriter) {
+      res.status(404).json({ error: "Wriber not found" });
+    } else {
+      res.json(updatedWriter);
+    }
+  } catch (error) {
+    res.status(400).json({ error: err.message });
+  }
+};
