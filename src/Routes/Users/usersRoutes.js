@@ -26,3 +26,5 @@ usersRoute.patch("/users/:id", updateUser);
 // get admin
 usersRoute.get("/users/admin/:email")
 module.exports = usersRoute;
+
+// update

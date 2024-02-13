@@ -1,18 +1,22 @@
 const express = require("express");
 const {
   getAllBooks,
+  getTenExchangeBooks,
   getBookById,
   addBook,
   updateBook,
   deleteBook,
   deleteAllBooks,
-  getIndividualExchangeBooks,
+  getIndividualExchangeBooks
 } = require("../../Controller/ExchangeBooksController/ExchangeBooksController");
 const verifyToken = require("../../Middleware/verifyToken");
 const exchangeBooksRouter = express.Router();
 
 // Get all exchangable books
 exchangeBooksRouter.get("/exchange-books", getAllBooks);
+
+// Get 10 exchangable books for home page
+exchangeBooksRouter.get("/exchange-books-home", getTenExchangeBooks);
 
 // Get a exchangable book by id
 exchangeBooksRouter.get("/exchange-books/:id", getBookById);
