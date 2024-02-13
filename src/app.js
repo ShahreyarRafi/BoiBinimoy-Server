@@ -33,6 +33,7 @@ const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
 const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
 const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 const writerRouter = require("./Routes/WriterRouters/WriterRouters");
+const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
 
 // middleware
 app.use(morgan("dev"));
@@ -78,6 +79,9 @@ app.use("/api/v1", categoryRouter);
 
 // writer related apis
 app.use("/api/v1", writerRouter);
+
+// publishers related apis
+app.use("/api/v1", publisherRouter);
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
