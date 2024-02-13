@@ -40,7 +40,6 @@ exports.getAllBuyBookController = async (req, res) => {
   }
 };
 
-
 // controller for get a buy book by id
 exports.getOneBookController = async (req, res) => {
   try {
@@ -109,5 +108,52 @@ exports.deleteBuyBook = async (req, res) => {
   } catch (error) {
     console.error("Error delete book data:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// =========================================
+// query query here
+// =========================================
+// query books by category
+exports.getBooksByCategory = async (req, res) => {
+  try {
+    const category = new RegExp(req.params.category, "i");
+    const books = await BuyBooks.find({ category });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by publisher
+exports.getBooksByPublisher = async (req, res) => {
+  try {
+    const publisher = new RegExp(req.params.publisher, "i");
+    const books = await BuyBooks.find({ publisher });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by writer
+exports.getBooksByWriter = async (req, res) => {
+  try {
+    const writer = new RegExp(req.params.writer, "i");
+    const books = await BuyBooks.find({ writer });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by language
+exports.getBooksByLanguage = async (req, res) => {
+  try {
+    const language = new RegExp(req.params.language, "i");
+    const books = await BuyBooks.find({ language });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

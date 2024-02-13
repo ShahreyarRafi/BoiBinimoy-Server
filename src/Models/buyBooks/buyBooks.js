@@ -1,102 +1,103 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const BuyBooksSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  writer: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  recommended_age: {
+    type: String,
+  },
+  published_date: {
+    type: Number,
+  },
+  language: {
+    type: String,
+  },
+  pages: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  publisher: {
+    type: String,
+    required: true,
+  },
+  edition: {
+    type: String,
+  },
+  weight: {
+    type: Number,
+  },
+  dimensions: {
+    type: {
+      height: String,
+      width: String,
+      depth: String,
     },
-    description: {
-        type: String,
-        required: true,
+  },
+  owner_email: {
+    type: String,
+    required: true,
+  },
+  stock_limit: {
+    type: Number,
+  },
+  upload_time: {
+    type: Date,
+    default: Date.now,
+  },
+  tags: {
+    type: [String],
+  },
+  avg_rating: {
+    type: Number,
+  },
+  reviews: {
+    type: [
+      {
+        user_name: String,
+        user_image: String,
+        user_email: String,
+        rating: Number,
+        comment: String,
+      },
+    ],
+  },
+  cover_image: {
+    type: String,
+    required: true,
+  },
+  awards: {
+    type: [String],
+  },
+  recommended_for: {
+    type: [String],
+  },
+  format_details: {
+    type: {
+      ebook: String,
+      audio_book: String,
+      audio_book_narrator: String,
     },
-    writer: {
-        type: String,
-        // required: true,
-    },
-    published_year: {
-        type: Number,
-        // required: true,
-    },
-    language: {
-        type: String,
-        // required: true,
-    },
-    pages: {
-        type: Number,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    publisher: {
-        type: String,
-    },
-    edition: {
-        type: String,
-    },
-    weight: {
-        type: Number,
-    },
-    dimensions: {
-        type: {
-            height: Number,
-            width: Number,
-            depth: Number
-        },
-    },
-    owner_email: {
-        type: String,
-        required: true
-    },
-    stock_limit: {
-        type: Number,
-    },
-    availability: {
-        type: Boolean,
-    },
-    upload_time: {
-        type: Date,
-        default: Date.now,  // Set default value to the current date and time
-    },
-    tags: {
-        type: [String],
-    },
-    avg_rating: {
-        type: Number,
-    },
-    reviews: {
-        type: [
-            {
-                user_name: String,
-                user_image: String,
-                user_rating: Number,
-                user_email: String,
-                comment: String,
-            }
-        ],
-    },
-    cover_image: {
-        type: String,
-        required: true
-    },
-    awards: {
-        type: [String],
-    },
-    recommended_for: {
-        type: [String],
-    },
-    format_details: {
-        type: {
-            is_ebook: Boolean,
-            is_audio_book: Boolean,
-            audio_book_narrator: String,
-        },
-    },
-  
+  },
 });
 
-const BuyBooks = model('BuyBooks', BuyBooksSchema);
+const BuyBooks = model("BuyBooks", BuyBooksSchema);
 
 module.exports = BuyBooks;
-
