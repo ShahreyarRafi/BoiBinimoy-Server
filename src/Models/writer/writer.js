@@ -26,4 +26,4 @@ const writerSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Writer", writerSchema);
+module.exports = mongoose.model("Writers", writerSchema);
