@@ -12,13 +12,15 @@ const writerRouter = express.Router();
 writerRouter.get("/writers", getAllWriter);
 
 // get a writer router
-writerRouter.get("/writer/:id", getWriterById);
+writerRouter.get("/writers/:id", getWriterById);
 
 // add a writer router
 writerRouter.post("/writers", addWriter);
 
 // update a writer router
-writerRouter.patch("/writer/:id", updateWriter);
+writerRouter.patch("/writers/:id", updateWriter);
 
 // delete a writer  router
-writerRouter.delete("/writer", deleteWriter);
+writerRouter.delete("/writers", deleteWriter);
+
+module.exports = writerRouter;

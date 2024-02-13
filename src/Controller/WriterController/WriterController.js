@@ -13,11 +13,11 @@ exports.getAllWriter = async (req, res) => {
 // get a writer by id
 exports.getWriterById = async (req, res) => {
   try {
-    const Writers = await Writers.findById(req.params.id);
-    if (!Writers) {
+    const writer = await Writers.findById(req.params.id);
+    if (!writer) {
       res.status(404).json({ error: "writer not found" });
     } else {
-      res.json(Writers);
+      res.json(writer);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -53,6 +53,7 @@ exports.updateWriter = async (req, res) => {
   }
 };
 
+// delete a writer
 exports.deleteWriter = async (req, res) => {
   try {
     const deleteWriter = await Writers.findByIdAndDelete(req.params.id);
