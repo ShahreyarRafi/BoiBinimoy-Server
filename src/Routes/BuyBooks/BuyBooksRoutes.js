@@ -18,11 +18,6 @@ const buyBookRouter = express.Router();
 
 buyBookRouter.get("/buy-books", getAllBuyBookController);
 
-// get all buy-books
-buyBookRouter.get("/buy-books-all", async(req, res) => {
-  const result = await BuyBooks.find();
-  res.send(result)
-});
 
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
