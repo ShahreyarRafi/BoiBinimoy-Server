@@ -45,7 +45,7 @@ exports.getAllUsersController = async (req, res) => {
 exports.getOneUserController = async (req, res) => {
   try {
     const requestedEmail = req.params.email;
-    console.log("asdf", requestedEmail);
+  
     const requestedUser = await Users.findOne({ email: requestedEmail });
 
     if (!requestedUser) {
@@ -59,11 +59,32 @@ exports.getOneUserController = async (req, res) => {
   }
 };
 
+
+// get user roles 
+
+exports.getUserRoles = async(req, res) => {
+  try{
+    const email = req.params.email;
+    const query = { email: email}
+    const roles = await Users.findOne(query).selected(
+    "isAdmin",
+    "isModerator",
+    "isPublisher",
+    "isSeller"
+    );
+    res.send(roles)
+
+  } catch (error) {
+    console.error("Error getting user roles data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 // controller for  create new user
 exports.postUserController = async (req, res) => {
   try {
     const user = req.body;
-    console.log(user);
+ 
     const query = { email: user.email };
     const existingUser = await Users.findOne(query);
     if (existingUser) {

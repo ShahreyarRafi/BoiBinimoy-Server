@@ -5,12 +5,19 @@ const {
   postBuyBookController,
   updateBuyBook,
   deleteBuyBook,
-  getIndividualBookController
+  getIndividualBookController,
+  getBooksByCategory,
+  getBooksByPublisher,
+  getBooksByWriter,
+  getBooksByLanguage,
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
 const buyBookRouter = express.Router();
 
 // get all buy-books
+
 buyBookRouter.get("/buy-books", getAllBuyBookController);
+
 
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
@@ -26,5 +33,21 @@ buyBookRouter.patch("/buy-books/:id", updateBuyBook);
 
 // delete a buy-boks
 buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
+
+
+
+// for query router by buy-books
+// =====================================
+// router to query books by category
+buyBookRouter.get("/category/:category", getBooksByCategory);
+
+// router to query books by publisher
+buyBookRouter.get("/publisher/:publisher", getBooksByPublisher);
+
+// router to query books by writer
+buyBookRouter.get("/writer/:writer", getBooksByWriter);
+
+// router to query books by language
+buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 module.exports = buyBookRouter;

@@ -3,8 +3,9 @@ const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
 // controller for get all buy books
 exports.getAllBuyBookController = async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 14;
+  const page = parseInt(req.query?.page) || 1;
+  const limit = parseInt(req.query?.limit) || 14;
+  console.log("page:", page, "limit", limit);
   try {
     const totalBook = await BuyBooks.countDocuments();
     const startIndex = (page - 1) * limit;
@@ -35,11 +36,11 @@ exports.getAllBuyBookController = async (req, res) => {
     const buyBooks = await BuyBooks.aggregate(aggregationPipline);
     res.send({totalBook,  buyBooks });
   } catch (error) {
+    console.log(error);
     console.error("Error getting buy books data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 // controller for get a buy book by id
 exports.getOneBookController = async (req, res) => {
@@ -109,5 +110,52 @@ exports.deleteBuyBook = async (req, res) => {
   } catch (error) {
     console.error("Error delete book data:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// =========================================
+// query query here
+// =========================================
+// query books by category
+exports.getBooksByCategory = async (req, res) => {
+  try {
+    const category = new RegExp(req.params.category, "i");
+    const books = await BuyBooks.find({ category });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by publisher
+exports.getBooksByPublisher = async (req, res) => {
+  try {
+    const publisher = new RegExp(req.params.publisher, "i");
+    const books = await BuyBooks.find({ publisher });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by writer
+exports.getBooksByWriter = async (req, res) => {
+  try {
+    const writer = new RegExp(req.params.writer, "i");
+    const books = await BuyBooks.find({ writer });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// query books by language
+exports.getBooksByLanguage = async (req, res) => {
+  try {
+    const language = new RegExp(req.params.language, "i");
+    const books = await BuyBooks.find({ language });
+    res.json(books);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

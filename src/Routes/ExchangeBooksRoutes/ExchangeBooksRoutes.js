@@ -6,7 +6,6 @@ const {
   addBook,
   updateBook,
   deleteBook,
-  deleteAllBooks,
   getIndividualExchangeBooks
 } = require("../../Controller/ExchangeBooksController/ExchangeBooksController");
 const verifyToken = require("../../Middleware/verifyToken");
