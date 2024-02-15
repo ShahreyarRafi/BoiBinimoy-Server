@@ -68,17 +68,6 @@ const BuyBooksSchema = new Schema({
   avg_rating: {
     type: Number,
   },
-  reviews: {
-    type: [
-      {
-        user_name: String,
-        user_image: String,
-        user_email: String,
-        rating: Number,
-        comment: String,
-      },
-    ],
-  },
   cover_image: {
     type: String,
     required: true,

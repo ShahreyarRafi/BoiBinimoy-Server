@@ -4,6 +4,7 @@ const {
   getOneUserController,
   postUserController,
   updateUser,
+  getUserRoles,
 } = require("../../Controller/UsersControllers/UsersControllers");
 const verifyAdmin = require("../../Middleware/VerifyAdmin/VerifyAdmin");
 const verifyToken = require("../../Middleware/verifyToken");
@@ -11,7 +12,7 @@ const Users = require("../../Models/Users/Users");
 const usersRoute = express.Router();
 
 // get all users
-usersRoute.get("/users",  getAllUsersController);
+usersRoute.get("/users", verifyToken,  getAllUsersController);
 
 // get a user by id
 usersRoute.get("/users/:email", getOneUserController);
@@ -24,7 +25,7 @@ usersRoute.post("/users", postUserController);
 usersRoute.patch("/users/:id", updateUser);
 
 // get admin
-usersRoute.get("/users/admin/:email")
+usersRoute.get("/users/roles/:email", getUserRoles)
 
 module.exports = usersRoute;
 

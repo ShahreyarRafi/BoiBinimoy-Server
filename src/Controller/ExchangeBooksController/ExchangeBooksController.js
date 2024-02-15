@@ -2,13 +2,53 @@ const ExchangeBooks = require("../../Models/ExchangeBooksModel/ExchangeBooksMode
 
 // controller for get all exchange books
 exports.getAllBooks = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 14;
   try {
-    const books = await ExchangeBooks.find();
-    res.json(books);
+    const totalBook = await ExchangeBooks.countDocuments();
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const pagination = {};
+    if (endIndex < totalBook) {
+      pagination.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    const aggregationPipline = [
+      {
+        $skip: startIndex,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    const exchangeBooks = await ExchangeBooks.aggregate(aggregationPipline);
+    res.send({totalBook,  exchangeBooks });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+// get 10 exchangable books for home page controller
+exports.getTenExchangeBooks = async(req, res) => {
+  try{
+     const books = await ExchangeBooks.find();
+     const result = books.slice(0,10);
+     res.send(result)
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 // controller for get a exchange book  by id
 exports.getBookById = async (req, res) => {

@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const verifyToken = async (req, res, next) => {
   const token = await req.cookies?.token;
+  console.log("token",token);
   if (!token) {
     return res.status(401).send({ message: 'unauthorized access' })
   }
@@ -11,6 +12,7 @@ const verifyToken = async (req, res, next) => {
       return res.status(403).send({ message: 'unauthorized access' })
     }
     req.user = decoded;
+    console.log("decoded: ", decoded);
     next();
   })
 }

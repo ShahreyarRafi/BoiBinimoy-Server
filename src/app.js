@@ -25,15 +25,18 @@ app.use(cookieParser());
 
 const jwtRoute = require("./Routes/jwt/jwtRoute");
 
-const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
-const buyBookRouter = require("./Routes/BuyBooks/BuyBooksRoutes");
+
 const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
 const usersRoute = require("./Routes/Users/usersRoutes");
-const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
+const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
 const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
+const buyBookRouter = require("./Routes/BuyBooks/BuyBooksRoutes");
+const reviewsRouter = require("./Routes/ReviewsRoutes/ReviewsRoutes");
+const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
 const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 const writerRouter = require("./Routes/WriterRouters/WriterRouters");
 const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
+const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 
 // middleware
 app.use(morgan("dev"));
@@ -71,16 +74,22 @@ app.use("/api/v1", requestBooksRouter);
 // buy book related apis
 app.use("/api/v1", buyBookRouter);
 
+// add to carts  related apis
+app.use("/api/v1", CartsRouter);
+
+// reviews of buy book related apis
+app.use("/api/v1", reviewsRouter);
+
 // blogs related apis
 app.use("/api/v1/", blogsRouter);
 
-// category related apis
+// // category related apis
 app.use("/api/v1", categoryRouter);
 
-// writer related apis
+// // writer related apis
 app.use("/api/v1", writerRouter);
 
-// publishers related apis
+// // publishers related apis
 app.use("/api/v1", publisherRouter);
 
 app.get("*", (req, res) => {

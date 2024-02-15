@@ -2,9 +2,39 @@ const Users = require("../../Models/Users/Users");
 
 // controller for get all user
 exports.getAllUsersController = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 14;
   try {
-    const result = await Users.find();
-    res.send(result);
+    const totalUser = await Users.countDocuments();
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const pagination = {};
+    if (endIndex < totalUser) {
+      pagination.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    const aggregationPipline = [
+      {
+        $skip: startIndex,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    const users = await Users.aggregate(aggregationPipline)
+
+    res.send({totalUser, users });
+
   } catch (error) {
     console.error("Error getting all users data:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -15,26 +45,46 @@ exports.getAllUsersController = async (req, res) => {
 exports.getOneUserController = async (req, res) => {
   try {
     const requestedEmail = req.params.email;
-    console.log("asdf", requestedEmail);
+  
     const requestedUser = await Users.findOne({ email: requestedEmail });
 
     if (!requestedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    
+
     res.send(requestedUser);
-  
   } catch (error) {
     console.error("Error getting user data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+
+// get user roles 
+
+exports.getUserRoles = async(req, res) => {
+  try{
+    const email = req.params.email;
+    const query = { email: email}
+    const roles = await Users.findOne(query).selected(
+    "isAdmin",
+    "isModerator",
+    "isPublisher",
+    "isSeller"
+    );
+    res.send(roles)
+
+  } catch (error) {
+    console.error("Error getting user roles data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 // controller for  create new user
 exports.postUserController = async (req, res) => {
   try {
     const user = req.body;
-    console.log(user);
+ 
     const query = { email: user.email };
     const existingUser = await Users.findOne(query);
     if (existingUser) {

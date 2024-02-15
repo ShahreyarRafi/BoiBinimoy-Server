@@ -11,10 +11,13 @@ const {
   getBooksByWriter,
   getBooksByLanguage,
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
 const buyBookRouter = express.Router();
 
 // get all buy-books
+
 buyBookRouter.get("/buy-books", getAllBuyBookController);
+
 
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
@@ -30,6 +33,8 @@ buyBookRouter.patch("/buy-books/:id", updateBuyBook);
 
 // delete a buy-boks
 buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
+
+
 
 // for query router by buy-books
 // =====================================
