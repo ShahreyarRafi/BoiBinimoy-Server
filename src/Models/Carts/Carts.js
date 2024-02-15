@@ -2,6 +2,10 @@ const { default: mongoose } = require("mongoose");
 
 
 const CartsSchema = new mongoose.Schema({
+    user_name: {
+       type: String,
+       required: true
+    },
     user_email: {
         type: String,
         required: true
