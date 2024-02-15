@@ -12,8 +12,7 @@ const Users = require("../../Models/Users/Users");
 const usersRoute = express.Router();
 
 // get all users
-usersRoute.get("/users", verifyToken, getAllUsersController);
-
+usersRoute.get("/users", verifyToken,  getAllUsersController);
 
 // get a user by id
 usersRoute.get("/users/:email", getOneUserController);

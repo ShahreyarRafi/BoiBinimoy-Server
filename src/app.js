@@ -35,7 +35,8 @@ const reviewsRouter = require("./Routes/ReviewsRoutes/ReviewsRoutes");
 const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
 const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 const writerRouter = require("./Routes/WriterRouters/WriterRouters");
-const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter")
+const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
+const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 
 // middleware
 app.use(morgan("dev"));
@@ -72,6 +73,9 @@ app.use("/api/v1", requestBooksRouter);
 
 // buy book related apis
 app.use("/api/v1", buyBookRouter);
+
+// add to carts  related apis
+app.use("/api/v1", CartsRouter);
 
 // reviews of buy book related apis
 app.use("/api/v1", reviewsRouter);
