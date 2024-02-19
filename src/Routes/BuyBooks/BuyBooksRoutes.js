@@ -34,15 +34,16 @@ buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
 // for query router by buy-books
 // =====================================
 // router to query books by category
-buyBookRouter.get("/buy-books/category/:category", getBooksByCategory);
+buyBookRouter.get("/category/:category", getBooksByCategory);
 
 // router to query books by publisher
-buyBookRouter.get("/buy-books/publisher/:publisher", getBooksByPublisher);
+buyBookRouter.get("/publisher/:publisher", getBooksByPublisher);
 
 // router to query books by writer
-buyBookRouter.get("/buy-books/writer/:writer", getBooksByWriter);
+buyBookRouter.get("/writer/:writer", getBooksByWriter);
 
 // router to query books by language
-buyBookRouter.get("/buy-books/language/:language", getBooksByLanguage);
+buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 module.exports = buyBookRouter;
+ddc;
