@@ -1,4 +1,5 @@
 const Carts = require("../../Models/Carts/Carts");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
 // get my all carts
 exports.getMyCarts = async (req, res) => {
@@ -6,7 +7,23 @@ exports.getMyCarts = async (req, res) => {
     const email = req.params.email;
     const filter = { user_email: email };
     const carts = await Carts.find(filter);
-    res.send(carts);
+    const bookPromises = carts.map(async (cart) => {
+        const id = cart?.book_id || "";
+        const book = await BuyBooks.findById(id) || {};
+        return book;
+      });
+  
+      const books = await Promise.all(bookPromises);
+      
+      let totalPrice = 0;
+      carts?.map(cart =>{
+        totalPrice += cart?.price
+      })
+      if (books.length) {
+        res.send({ carts, books, totalPrice });
+      } else {
+        res.send({ carts });
+      }
   } catch (error) {
     console.error("Error getting my carts data:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -29,10 +46,14 @@ exports.getOneCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   try {
     const cart = req.body;
+    const query = { book_id: cart?.book_id };
+    const existingBook = await Carts.findOne(query);
+    if (existingBook) {
+      return res.send({ message: "This book already exists", insertedId: null });
+    }
     const newCart = new Carts(cart);
     const result = await newCart.save();
     res.send(result);
-
   } catch (error) {
     console.error("Error getting cart data:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -44,7 +65,8 @@ exports.addToCart = async (req, res) => {
 exports.deleteACart = async (req, res) => {
     try{
        const id = req.params.id;
-       const result = await Carts.findByIdAndDelete(id);
+       const query = { book_id: id}
+       const result = await Carts.deleteOne(query);
        res.send(result);
     }  catch (error) {
         console.error("Error delete cart data:", error);
