@@ -27,7 +27,6 @@ app.use(cookieParser());
 
 const jwtRoute = require("./Routes/jwt/jwtRoute");
 
-const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
 const usersRoute = require("./Routes/Users/usersRoutes");
 const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
 const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
@@ -63,9 +62,6 @@ app.get("/", (req, res) => {
 
 // authentication routes
 app.use(jwtRoute);
-
-// banner slider related apis
-app.use("/api/v1", bannerRouter);
 
 // users related api
 app.use("/api/v1", usersRoute);
