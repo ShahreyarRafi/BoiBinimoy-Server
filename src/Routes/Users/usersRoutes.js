@@ -8,7 +8,6 @@ const {
 } = require("../../Controller/UsersControllers/UsersControllers");
 const verifyAdmin = require("../../Middleware/VerifyAdmin/VerifyAdmin");
 const verifyToken = require("../../Middleware/verifyToken");
-const Users = require("../../Models/Users/Users");
 const usersRoute = express.Router();
 
 // get all users
