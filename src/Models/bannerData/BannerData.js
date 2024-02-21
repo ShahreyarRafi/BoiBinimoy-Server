@@ -3,7 +3,7 @@ const { Schema, model} = require('mongoose');
 const BannerDataSchema = new Schema({
     cover_image : {
         type: String,
-        required: true,
+        // required: true,
     },
     author : {
         type: String,
@@ -14,7 +14,7 @@ const BannerDataSchema = new Schema({
         required: true,
     },
     topic : {
-        type: Array,
+        type: String,
     },
     description : {
         type: String,
