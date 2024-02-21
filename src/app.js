@@ -40,6 +40,9 @@ const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
 const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 const PaymentRouter = require("./Routes/PaymentRoutes/PaymentRoutes");
 
+
+
+
 // middleware
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -96,6 +99,7 @@ app.use("/api/v1", publisherRouter);
 
 // payment related routes
 app.use("/api/v1", PaymentRouter);
+
 
 
 

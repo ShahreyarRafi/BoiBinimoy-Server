@@ -61,12 +61,21 @@ exports.addToCart = async (req, res) => {
 };
 
 
+exports.updateCart = async (req, res) => {
+  try{
+    const id = req.params.id;
+    const result = await Carts.findByIdAndUpdate(id, req.body, { new: true});
+    res.send(result);
+  }  catch (error) {
+    console.error("Error update cart data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 // delete a cart
 exports.deleteACart = async (req, res) => {
     try{
-       const id = req.params.id;
-       const query = { book_id: id}
-       const result = await Carts.deleteOne(query);
+       const result = await Carts.findByIdAndDelete(req.params.id);
        res.send(result);
     }  catch (error) {
         console.error("Error delete cart data:", error);

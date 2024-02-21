@@ -8,7 +8,9 @@ const PaymentRouter = express.Router();
 // order create route
 PaymentRouter.post("/order", postOrder);
 
+PaymentRouter.post("/success", postSuccess)
+
+
 // success route
-PaymentRouter.post("/success/:tran_id", postSuccess);
 
 module.exports = PaymentRouter;

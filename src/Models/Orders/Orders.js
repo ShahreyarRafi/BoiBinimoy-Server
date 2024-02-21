@@ -36,6 +36,11 @@ const ordersSchema = new mongoose.Schema({
     isDeliverd: {
         type: Boolean,
         required: true
+    },
+    totalBooks: Number,
+    totalPrice: {
+        type: Number,
+        required: true
     }
 });
 
