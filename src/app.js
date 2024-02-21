@@ -8,8 +8,6 @@ const { rateLimit } = require("express-rate-limit");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-
-
 const corsOptions = {
   origin: [
     "*",
@@ -33,15 +31,11 @@ const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksR
 const requestBooksRouter = require("./Routes/RequestBooks/RequestBooks");
 const buyBookRouter = require("./Routes/BuyBooks/BuyBooksRoutes");
 const reviewsRouter = require("./Routes/ReviewsRoutes/ReviewsRoutes");
-const blogsRouter = require("./Routes/BlogsRoute/BlogsRoute");
 const categoryRouter = require("./Routes/CategoryRouter/CategoryRouter");
 const writerRouter = require("./Routes/WriterRouters/WriterRouters");
 const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
 const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 const PaymentRouter = require("./Routes/PaymentRoutes/PaymentRoutes");
-
-
-
 
 // middleware
 app.use(morgan("dev"));
@@ -85,9 +79,6 @@ app.use("/api/v1", CartsRouter);
 // reviews of buy book related apis
 app.use("/api/v1", reviewsRouter);
 
-// blogs related apis
-app.use("/api/v1/", blogsRouter);
-
 // category related apis
 app.use("/api/v1", categoryRouter);
 
@@ -99,9 +90,6 @@ app.use("/api/v1", publisherRouter);
 
 // payment related routes
 app.use("/api/v1", PaymentRouter);
-
-
-
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
