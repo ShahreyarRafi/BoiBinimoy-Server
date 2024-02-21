@@ -18,7 +18,6 @@ const buyBookRouter = express.Router();
 
 buyBookRouter.get("/buy-books", getAllBuyBookController);
 
-
 // get a buy-books by id
 buyBookRouter.get("/buy-books/:id", getOneBookController);
 
@@ -33,8 +32,6 @@ buyBookRouter.patch("/buy-books/:id", updateBuyBook);
 
 // delete a buy-boks
 buyBookRouter.delete("/buy-books/:id", deleteBuyBook);
-
-
 
 // for query router by buy-books
 // =====================================
