@@ -7,6 +7,8 @@ const is_live = false; //true for live, false for sandbox
 const { ObjectId } = require("mongodb");
 const Carts = require("../../Models/Carts/Carts");
 const Orders = require("../../Models/Orders/Orders");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
+const { default: mongoose } = require("mongoose");
 
 exports.postOrder = async (req, res) => {
   console.log("order cliekdd");
@@ -68,6 +70,7 @@ exports.postOrder = async (req, res) => {
       isDeliverd: false,
       totalBooks,
       totalPrice: totalBookPrice,
+      clientEmail: userEmail
     };
 
     const newOrder = new Orders(finalOrder);
@@ -89,7 +92,22 @@ exports.postSuccess = async (req, res) => {
 
   if (updateOrder.modifiedCount >= 1) {
     const filter = { user_email: userEmail };
-    console.log(userEmail);
+    const carts = await Carts.find(filter);
+
+    carts.map(async(cart) => {
+      const query = { _id: new mongoose.Types.ObjectId(cart?.book_id)}
+      const book = await BuyBooks.findById(query);
+      let stock_limit = book?.stock_limit;
+
+      const updateBookQuantity = await BuyBooks.updateOne(query, {
+        $set: {
+          stock_limit: stock_limit - cart?.quantity
+        }
+      });
+      console.log(updateBookQuantity);
+    });
+
+
     const deleteCarts = await Carts.deleteMany(filter);
     console.log(deleteCarts);
     res.redirect("http://localhost:3000/dashboard/my-orders"); // TODO:  set live link before deploy

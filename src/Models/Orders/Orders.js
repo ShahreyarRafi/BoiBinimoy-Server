@@ -41,6 +41,14 @@ const ordersSchema = new mongoose.Schema({
     totalPrice: {
         type: Number,
         required: true
+    },
+    orderDate: {
+        type: Date,
+        default: new Date()
+    },
+    clientEmail: {
+        type: String,
+        required: true
     }
 });
 

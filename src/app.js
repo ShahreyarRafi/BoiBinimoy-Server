@@ -39,6 +39,7 @@ const writerRouter = require("./Routes/WriterRouters/WriterRouters");
 const publisherRouter = require("./Routes/PublisherRouter/PublisherRouter");
 const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 const PaymentRouter = require("./Routes/PaymentRoutes/PaymentRoutes");
+const OrdersRouter = require("./Routes/OrdersRouter/OrdersRouter");
 
 
 
@@ -101,6 +102,8 @@ app.use("/api/v1", publisherRouter);
 app.use("/api/v1", PaymentRouter);
 
 
+// Orders related api
+app.use("/api/v1", OrdersRouter);
 
 
 app.get("*", (req, res) => {
