@@ -46,4 +46,3 @@ buyBookRouter.get("/writer/:writer", getBooksByWriter);
 buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 module.exports = buyBookRouter;
-ddc;
