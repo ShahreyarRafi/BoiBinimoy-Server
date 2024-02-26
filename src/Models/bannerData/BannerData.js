@@ -19,9 +19,8 @@ const BannerDataSchema = new Schema({
     description : {
         type: String,
     },
-    buttons : {
-        type:Array,
-    },
+    see_more_button: String,
+    buy_now_button: String,
     thumbnail_img : {
         type: String,
     },
