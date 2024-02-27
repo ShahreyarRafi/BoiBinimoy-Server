@@ -58,6 +58,7 @@ exports.getSellerOrders = async (req, res) => {
     });
        
     const books = await Promise.all(bookPromises);
+    
     const sellerBooks = books.filter((book) => book.owner_email === ownerEmail)
    
     res.send(sellerBooks)
