@@ -1,7 +1,7 @@
 const Carts = require("../../Models/Carts/Carts");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
-// get my all carts
+// get my all carts by email
 exports.getMyCarts = async (req, res) => {
   try {
     const email = req.params.email;
@@ -15,12 +15,21 @@ exports.getMyCarts = async (req, res) => {
   
       const books = await Promise.all(bookPromises);
       
+      const myCarts = carts.map( (cart, index) => {
+        return {
+          cart,
+          book: books[index] || "book not found"
+        };
+      });
+
+      let quantity = 0;
       let totalPrice = 0;
       carts?.map(cart =>{
-        totalPrice += cart?.price
+        quantity += cart?.quantity;
+        totalPrice += cart?.price;
       })
       if (books.length) {
-        res.send({ carts, books, totalPrice });
+        res.send({ myCarts, quantity, totalPrice });
       } else {
         res.send({ carts });
       }

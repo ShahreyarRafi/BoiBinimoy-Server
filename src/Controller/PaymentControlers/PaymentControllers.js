@@ -7,16 +7,17 @@ const is_live = false; //true for live, false for sandbox
 const { ObjectId } = require("mongodb");
 const Carts = require("../../Models/Carts/Carts");
 const Orders = require("../../Models/Orders/Orders");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
+const { default: mongoose } = require("mongoose");
+const SellerOrders = require("../../Models/SellerOrders/SellerOrders");
 
 exports.postOrder = async (req, res) => {
-  console.log("order cliekdd");
   const userEmail = req?.body?.email;
   const filter = { user_email: userEmail };
   const carts = await Carts.find(filter);
   let totalBookPrice = 0;
   let totalBooks = 0;
 
-  console.log("user email", userEmail);
   for (const cart of carts) {
     totalBookPrice += cart.price;
     totalBooks += cart.quantity;
@@ -68,6 +69,7 @@ exports.postOrder = async (req, res) => {
       isDeliverd: false,
       totalBooks,
       totalPrice: totalBookPrice,
+      clientEmail: userEmail,
     };
 
     const newOrder = new Orders(finalOrder);
@@ -89,11 +91,74 @@ exports.postSuccess = async (req, res) => {
 
   if (updateOrder.modifiedCount >= 1) {
     const filter = { user_email: userEmail };
-    console.log(userEmail);
-    const deleteCarts = await Carts.deleteMany(filter);
-    console.log(deleteCarts);
+    const carts = await Carts.find(filter);
+
+    carts.map(async (cart) => {
+      const query = { _id: new mongoose.Types.ObjectId(cart?.book_id) };
+      const book = await BuyBooks.findById(query);
+      let stock_limit = book?.stock_limit;
+
+    await BuyBooks.updateOne(query, {
+        $set: {
+          stock_limit: stock_limit - cart?.quantity,
+        },
+      });
+    });
+    await Carts.deleteMany(filter);
+
+    // this part for individual sellers
+    const order = await Orders.findOne(query);
+    const orderCarts = order?.carts;
+
+    const { tranjectionId, isPaid, isDeliverd, clientEmail } = order;
+    let totalBooks = 0,
+      totalPrice = 0;
+
+    const booksCartsByOwner = {};
+
+    // Iterate through each cart in the order
+
+    orderCarts.forEach((cart) => {
+      const ownerEmail = cart.owner_email;
+
+      // If the owner_email is not a key in the booksCartsByOwner object, create it
+      if (!booksCartsByOwner[ownerEmail]) {
+        booksCartsByOwner[ownerEmail] = [];
+      }
+      // Add the cart to the corresponding owner's array
+      booksCartsByOwner[ownerEmail].push(cart);
+      totalBooks += cart.quantity;
+      totalPrice += cart.price;
+    });
+
+    // Iterate through each owner_email and distribute the payment
+    for (const ownerEmail in booksCartsByOwner) {
+      const ownerCarts = booksCartsByOwner[ownerEmail];
+      console.log('ownerCarts; ', ownerCarts);
+      const ownerTotalPrice = ownerCarts.reduce(
+        (total, cart) => total + cart.price,
+        0
+      );
+
+      const sellerOrder = {
+        carts: ownerCarts,
+        tranjectionId,
+        isPaid,
+        isDeliverd,
+        totalBooks: ownerCarts.reduce(
+          (total, cart) => total + cart.quantity,
+          0
+        ),
+        totalPrice: ownerTotalPrice,
+        clientEmail,
+        ownerEmail,
+      };
+
+      const newSellerOrder = new SellerOrders(sellerOrder);
+      await newSellerOrder.save();
+    }
+
     res.redirect("http://localhost:3000/dashboard/my-orders"); // TODO:  set live link before deploy
   }
-
   // res.send(deleteCarts);
 };

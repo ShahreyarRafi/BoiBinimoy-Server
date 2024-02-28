@@ -11,6 +11,11 @@ const ordersSchema = new mongoose.Schema({
              type: String,
              required: true
          },
+         owner_email: {
+             type: String,
+             required: true
+         },
+
          book_id: {
              type: String,
              required: true
@@ -40,6 +45,14 @@ const ordersSchema = new mongoose.Schema({
     totalBooks: Number,
     totalPrice: {
         type: Number,
+        required: true
+    },
+    orderDate: {
+        type: Date,
+        default: new Date()
+    },
+    clientEmail: {
+        type: String,
         required: true
     }
 });
