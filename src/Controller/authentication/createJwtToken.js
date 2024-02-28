@@ -4,7 +4,6 @@ require("dotenv").config();
 const createJwtToken = async (req, res) => {
   try {
     const user = await req.body;
-    console.log(user);
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "3h",
     });
@@ -12,9 +11,8 @@ const createJwtToken = async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false,
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-      
+        secure: /* process.env.NODE_ENV === "production" ?  */true /* : false */,
+        sameSite: /* process.env.NODE_ENV === "production" ?  */"none" /* : "strict" */,
       })
       .send({ success: true });
   } catch (error) {
