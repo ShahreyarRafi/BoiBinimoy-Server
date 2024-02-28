@@ -44,6 +44,8 @@ const SellerOrdersRouter = require("./Routes/SellerOrdersRouter/SellerOrdersRout
 
 
 
+const messageRouter = require("./Routes/MessageRouter/MessageRouter");
+const wishlistRouter = require("./Routes/WishlistRouter/WishlistRouter");
 
 // middleware
 app.use(morgan("dev"));
@@ -71,6 +73,9 @@ app.use("/api/v1", bannerRouter);
 
 // users related api
 app.use("/api/v1", usersRoute);
+
+// message related api
+app.use("/api/v1", messageRouter);
 
 // exchange books related apis
 app.use("/api/v1", exchangeBooksRouter);
@@ -109,6 +114,8 @@ app.use("/api/v1", OrdersRouter);
 // seller orders router 
 app.use("/api/v1", SellerOrdersRouter);
 
+// wishlist related apis
+app.use("/api/v1", wishlistRouter);
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
