@@ -25,8 +25,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-const jwtRoute = require("./Routes/jwt/jwtRoute");
 
+const jwtRoute = require("./Routes/jwt/jwtRoute");
 const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
 const usersRoute = require("./Routes/Users/usersRoutes");
 const exchangeBooksRouter = require("./Routes/ExchangeBooksRoutes/ExchangeBooksRoutes");
@@ -41,11 +41,9 @@ const CartsRouter = require("./Routes/CartsRoutes/CartsRoutes");
 const PaymentRouter = require("./Routes/PaymentRoutes/PaymentRoutes");
 const OrdersRouter = require("./Routes/OrdersRouter/OrdersRouter");
 const SellerOrdersRouter = require("./Routes/SellerOrdersRouter/SellerOrdersRouter");
-
-
-
 const messageRouter = require("./Routes/MessageRouter/MessageRouter");
 const wishlistRouter = require("./Routes/WishlistRouter/WishlistRouter");
+
 
 // middleware
 app.use(morgan("dev"));
@@ -54,7 +52,7 @@ app.use(bodyParser.json());
 app.use(xss());
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  limit: 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes).
   standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   // store: ... , // Use an external store for consistency across multiple server instances.
