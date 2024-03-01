@@ -4,10 +4,11 @@ const Schema = mongoose.Schema;
 const wishlistSchema = new Schema({
   userEmail: {
     type: String,
-    require: true,
+    required: true,
   },
-  booksID: {
-    type: Schema.Types.ObjectId,
+  book_id: {
+    type: String,
+    required: true
   },
   title: {
     type: String,
