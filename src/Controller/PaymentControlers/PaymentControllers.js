@@ -126,6 +126,8 @@ exports.postSuccess = async (req, res) => {
         booksCartsByOwner[ownerEmail] = [];
       }
       // Add the cart to the corresponding owner's array
+
+      console.log('cart: ', cart);
       booksCartsByOwner[ownerEmail].push(cart);
       totalBooks += cart.quantity;
       totalPrice += cart.price;

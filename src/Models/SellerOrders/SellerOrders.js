@@ -28,6 +28,9 @@ const sellerOrdersSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      isDeliverd: {
+        type: Boolean
+    }
     },
   ],
   tranjectionId: {
