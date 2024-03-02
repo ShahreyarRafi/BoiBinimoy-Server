@@ -113,3 +113,35 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+// controller for update user interest
+exports.updateUserInterest = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const updateInterest = await req.body;
+    const query = { email: email };
+    // const category = updateInterest?.interest?.category || [];
+    // const writer = updateInterest?.interest?.writer || [];
+    // const publisher = updateInterest?.interest?.publisher || [];
+    // const book = updateInterest?.interest?.book || [];
+
+    // if (category?.length > 6) {
+    //   category.splice(0, 1);
+    // }
+    // if (writer?.length > 6) {
+    //   writer?.splice(0, 1);
+    // }
+    // if (publisher?.length > 6) {
+    //   publisher;
+    // }
+    // if (book?.length > 6) {
+    //   book.splice(0, 1);
+    // }
+    // console.log(updateInterest);
+
+    const result = await Users.updateOne(query, updateInterest, { new: true });
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating user data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
