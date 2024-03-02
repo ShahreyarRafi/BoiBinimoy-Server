@@ -88,12 +88,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    interest: { 
-      category: Array,
-      writer: Array,
-      publisher: Array,
-      book: Array
-    },
+    interest: [],
     isBanne: {
       type: Boolean,
       default: false,

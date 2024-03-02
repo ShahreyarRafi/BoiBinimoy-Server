@@ -5,7 +5,7 @@ const {
   postUserController,
   updateUser,
   getUserRoles,
-  updateUserInterest
+
 } = require("../../Controller/UsersControllers/UsersControllers");
 const verifyAdmin = require("../../Middleware/VerifyAdmin/VerifyAdmin");
 const verifyToken = require("../../Middleware/verifyToken");
@@ -24,8 +24,7 @@ usersRoute.post("/users", postUserController);
 // update a user
 usersRoute.patch("/users/:id", updateUser);
 
-// update a user interest
-usersRoute.patch("/users-interest/:email", updateUserInterest);
+
 
 // get admin
 usersRoute.get("/users/roles/:email", getUserRoles)
