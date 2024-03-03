@@ -15,15 +15,8 @@ exports.getWishlist = async (req, res) => {
 // add new wishlist controller
 exports.addToWishlist = async (req, res) => {
   try {
-    const { userEmail, bookId, title, cover, writer, price } = req.body;
-    const newWishlist = new Wishlist({
-      userEmail,
-      bookId,
-      title,
-      cover,
-      writer,
-      price,
-    });
+    // const { userEmail, bookId, title, cover, writer, price } = req.body;
+    const newWishlist = new Wishlist(req.body);
     await newWishlist.save();
     res.status(201).json(newWishlist);
   } catch (error) {
