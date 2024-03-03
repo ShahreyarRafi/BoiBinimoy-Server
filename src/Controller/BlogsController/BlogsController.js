@@ -36,26 +36,24 @@ exports.createBlogController = async (req, res) => {
   }
 };
 
-
 // update a blogs
 exports.updateBlogController = async (req, res) => {
   try {
     const updateBlogData = await Blogs.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-      );
-      if (!updateBlogData) {
-        res.status(404).json({ error: "Blog not found" });
-      } else {
-        res.send(updateBlogData);
-      }
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updateBlogData) {
+      res.status(404).json({ error: "Blog not found" });
+    } else {
+      res.send(updateBlogData);
+    }
   } catch (error) {
     console.error("Error update blog data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 // delete a blog
 exports.deleteBlogController = async (req, res) => {
