@@ -7,32 +7,31 @@ exports.getMyCarts = async (req, res) => {
     const email = req.params.email;
     const filter = { user_email: email };
     const carts = await Carts.find(filter);
-    const bookPromises = carts.map(async (cart) => {
-        const id = cart?.book_id || "";
-        const book = await BuyBooks.findById(id) || {};
-        return book;
-      });
+
+    // const bookPromises = carts.map(async (cart) => {
+    //     const id = cart?.book_id || "";
+    //     const book = await BuyBooks.findById(id) || {};
+    //     return book;
+    //   });
   
-      const books = await Promise.all(bookPromises);
+    //   const books = await Promise.all(bookPromises);
       
-      const myCarts = carts.map( (cart, index) => {
-        return {
-          cart,
-          book: books[index] || "book not found"
-        };
-      });
+    //   const myCarts = carts.map( (cart, index) => {
+    //     return {
+    //       cart,
+    //       book: books[index] || "book not found"
+    //     };
+    //   });
 
       let quantity = 0;
       let totalPrice = 0;
       carts?.map(cart =>{
         quantity += cart?.quantity;
-        totalPrice += cart?.price;
+        totalPrice += cart?.total_price;
       })
-      if (books.length) {
-        res.send({ myCarts, quantity, totalPrice });
-      } else {
-        res.send({ carts });
-      }
+    
+        res.send( {carts, quantity, totalPrice} );
+      
   } catch (error) {
     console.error("Error getting my carts data:", error);
     res.status(500).json({ message: "Internal server error" });

@@ -19,7 +19,7 @@ exports.postOrder = async (req, res) => {
   let totalBooks = 0;
 
   for (const cart of carts) {
-    totalBookPrice += cart.price;
+    totalBookPrice += cart.total_price;
     totalBooks += cart.quantity;
   }
   const tran_id = new ObjectId().toString();
@@ -79,7 +79,6 @@ exports.postOrder = async (req, res) => {
 };
 
 exports.postSuccess = async (req, res) => {
-  console.log("success");
   const tranId = req.query.tran_id;
   const userEmail = req.query.email;
   const query = { tranjectionId: tranId };
@@ -126,19 +125,16 @@ exports.postSuccess = async (req, res) => {
         booksCartsByOwner[ownerEmail] = [];
       }
       // Add the cart to the corresponding owner's array
-
-      console.log('cart: ', cart);
       booksCartsByOwner[ownerEmail].push(cart);
       totalBooks += cart.quantity;
-      totalPrice += cart.price;
+      totalPrice += cart.total_price;
     });
 
     // Iterate through each owner_email and distribute the payment
     for (const ownerEmail in booksCartsByOwner) {
       const ownerCarts = booksCartsByOwner[ownerEmail];
-      console.log('ownerCarts; ', ownerCarts);
       const ownerTotalPrice = ownerCarts.reduce(
-        (total, cart) => total + cart.price,
+        (total, cart) => total + cart.total_price,
         0
       );
 
