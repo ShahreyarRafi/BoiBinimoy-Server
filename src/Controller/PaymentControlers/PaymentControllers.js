@@ -19,7 +19,7 @@ exports.postOrder = async (req, res) => {
   let totalBooks = 0;
 
   for (const cart of carts) {
-    totalBookPrice += cart.price;
+    totalBookPrice += cart.total_price;
     totalBooks += cart.quantity;
   }
   const tran_id = new ObjectId().toString();
@@ -28,7 +28,7 @@ exports.postOrder = async (req, res) => {
     total_amount: totalBookPrice,
     currency: "BDT",
     tran_id: tran_id, // use unique tran_id for each api call
-    success_url: `https://boi-binimoy-server.vercel.app/api/v1/success?tran_id=${tran_id}&email=${userEmail}`, //TODO: change the base url before deploy
+    success_url: `http://localhost:5000/api/v1/success?tran_id=${tran_id}&email=${userEmail}`, //TODO: change the base url before deploy
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
@@ -79,7 +79,6 @@ exports.postOrder = async (req, res) => {
 };
 
 exports.postSuccess = async (req, res) => {
-  console.log("success");
   const tranId = req.query.tran_id;
   const userEmail = req.query.email;
   const query = { tranjectionId: tranId };
@@ -126,19 +125,16 @@ exports.postSuccess = async (req, res) => {
         booksCartsByOwner[ownerEmail] = [];
       }
       // Add the cart to the corresponding owner's array
-
-      console.log('cart: ', cart);
       booksCartsByOwner[ownerEmail].push(cart);
       totalBooks += cart.quantity;
-      totalPrice += cart.price;
+      totalPrice += cart.total_price;
     });
 
     // Iterate through each owner_email and distribute the payment
     for (const ownerEmail in booksCartsByOwner) {
       const ownerCarts = booksCartsByOwner[ownerEmail];
-      console.log('ownerCarts; ', ownerCarts);
       const ownerTotalPrice = ownerCarts.reduce(
-        (total, cart) => total + cart.price,
+        (total, cart) => total + cart.total_price,
         0
       );
 
@@ -160,7 +156,7 @@ exports.postSuccess = async (req, res) => {
       await newSellerOrder.save();
     }
 
-    res.redirect("https://boibinimoy.netlify.app/dashboard/my-orders"); // TODO:  set live link before deploy
+    res.redirect("http://localhost:3000/dashboard/my-orders"); // TODO:  set live link before deploy
   }
   // res.send(deleteCarts);
 };
