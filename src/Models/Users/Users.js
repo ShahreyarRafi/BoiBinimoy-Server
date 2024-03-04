@@ -88,13 +88,18 @@ const userSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    interest: {
-      type: [String],
+    interest: { 
+      category: Array,
+      writer: Array,
+      publisher: Array,
+      book: Array
     },
     isBanne: {
       type: Boolean,
       default: false,
     },
+    isFirstLogin: Boolean,
+
   },
   { timestamps: true }
 );
@@ -102,3 +107,4 @@ const userSchema = new Schema(
 const Users = model("Users", userSchema);
 
 module.exports = Users;
+

@@ -18,14 +18,27 @@ const CartsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    price: {
+    unit_price: {
+        type: Number,
+        required: true
+    },
+    total_price: {
         type: Number,
         required: true
     },
     quantity: {
         type: Number,
         required: true
-    }
+    },
+    isDeliverd: {
+        type: Boolean
+    },
+    cover_image: {
+        type: String,
+    },
+    stock_limit: Number,
+    title: String,
+    // book: Object
 });
 
 

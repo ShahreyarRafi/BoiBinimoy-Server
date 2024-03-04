@@ -15,12 +15,15 @@ const sellerOrdersSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-
       book_id: {
         type: String,
         required: true,
       },
-      price: {
+      unit_price: {
+        type: Number,
+        required: true,
+      },
+      total_price: {
         type: Number,
         required: true,
       },
@@ -28,6 +31,14 @@ const sellerOrdersSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      isDeliverd: {
+        type: Boolean,
+      },
+      cover_image: {
+        type: String,
+      },
+      stock_limit: Number,
+      title: String,
     },
   ],
   tranjectionId: {
