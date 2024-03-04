@@ -28,7 +28,7 @@ exports.postOrder = async (req, res) => {
     total_amount: totalBookPrice,
     currency: "BDT",
     tran_id: tran_id, // use unique tran_id for each api call
-    success_url: `http://localhost:5000/api/v1/success?tran_id=${tran_id}&email=${userEmail}`, //TODO: change the base url before deploy
+    success_url: `https://boi-binimoy-server.vercel.app/api/v1/success?tran_id=${tran_id}&email=${userEmail}`, //TODO: change the base url before deploy
     fail_url: "http://localhost:3030/fail",
     cancel_url: "http://localhost:3030/cancel",
     ipn_url: "http://localhost:3030/ipn",
@@ -156,7 +156,7 @@ exports.postSuccess = async (req, res) => {
       await newSellerOrder.save();
     }
 
-    res.redirect("http://localhost:3000/dashboard/my-orders"); // TODO:  set live link before deploy
+    res.redirect("https://boibinimoy.netlify.app/dashboard/my-orders"); // TODO:  set live link before deploy
   }
   // res.send(deleteCarts);
 };
