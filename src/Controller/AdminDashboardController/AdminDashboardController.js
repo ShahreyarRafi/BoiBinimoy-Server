@@ -65,3 +65,54 @@ exports.getRecentOrderedBooks = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// 10 top selling books router
+// exports.getTopSellingBooks = async (req, res) => {
+//   try {
+//     const topSellingBooks = await Orders.aggregate([
+//       { $unwind: "$carts" }, // Unwind the carts array
+//       {
+//         $group: {
+//           _id: "$carts.book_id",
+//           totalQuantity: { $sum: "$carts.quantity" },
+//         },
+//       }, // Group by book_id and sum up the quantities
+//       { $sort: { totalQuantity: -1 } }, // Sort by total quantity in descending order
+//       { $limit: 10 }, // Limit to top 10
+//     ]);
+
+//     // Populate book details for each top selling book
+//     const populatedTopSellingBooks = await Promise.all(
+//       topSellingBooks.map(async (book) => {
+//         const populatedBook = await BuyBooks.findById(book._id);
+//         return { book: populatedBook, totalQuantity: book.totalQuantity };
+//       })
+//     );
+
+//     res.send({ topSellingBooks: populatedTopSellingBooks });
+//   } catch (error) {
+//     console.error("Error getting top selling books:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
+
+exports.getTopSellingBooks = async (req, res) => {
+  try {
+    const topSellingBooks = await Orders.aggregate([
+      { $unwind: "$carts" }, // Unwind the carts array
+      {
+        $group: {
+          _id: "$carts.book_id",
+          totalQuantity: { $sum: "$carts.quantity" },
+        },
+      }, // Group by book_id and sum up the quantities
+      { $sort: { totalQuantity: -1 } }, // Sort by total quantity in descending order
+      { $limit: 10 }, // Limit to top 10
+    ]);
+
+    res.send({ topSellingBooks });
+  } catch (error) {
+    console.error("Error getting top selling books:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
