@@ -41,7 +41,7 @@ exports.getLowStockBooks = async (req, res) => {
 };
 
 // get recent order with books
-exports.getRecentOrdersWithBooks = async (req, res) => {
+exports.getRecentOrderedBooks = async (req, res) => {
   try {
     // find 10 most recent orders
     const recentOrders = await Orders.find().sort({ orderDate: -1 }).limit(10);
