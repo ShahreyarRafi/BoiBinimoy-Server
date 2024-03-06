@@ -108,39 +108,3 @@ exports.getTopBuyingCustomers = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-exports.getTopSellingWriters = async (req, res) => {
-  try {
-    const topSellingWriters = await Orders.aggregate([
-      { $unwind: "$carts" }, // Unwind the carts array
-      {
-        $group: {
-          _id: "$carts.book_id",
-          totalQuantity: { $sum: "$carts.quantity" },
-        },
-      }, // Group by book_id and sum up the quantities
-      {
-        $lookup: {
-          from: "buybooks",
-          localField: "_id",
-          foreignField: "_id",
-          as: "bookDetails",
-        },
-      }, // Populate book details for each order
-      { $unwind: "$bookDetails" }, // Unwind the bookDetails array
-      {
-        $group: {
-          _id: "$bookDetails.writer",
-          totalQuantity: { $sum: "$totalQuantity" },
-        },
-      }, // Group by writer and sum up the total quantity
-      { $sort: { totalQuantity: -1 } }, // Sort by total quantity in descending order
-      { $limit: 10 }, // Limit to top 10
-    ]);
-
-    res.send({ topSellingWriters });
-  } catch (error) {
-    console.error("Error getting top selling writers:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
