@@ -4,7 +4,7 @@ const Wishlist = require("../../Models/wishlist/Wishlist");
 exports.getWishlist = async (req, res) => {
   try {
     const userEmail = req.params.userEmail;
-    const wishlist = await Wishlist.find({ userEmail });
+    const wishlist = await Wishlist.find({ user_email: userEmail });
     res.status(200).json(wishlist);
   } catch (error) {
     console.error(error);

@@ -43,29 +43,31 @@ exports.getSellerOrdersByEmail = async(req, res) => {
 
 exports.updateDelivery = async(req, res) => {
   try{
-    const cartId = req.params.cartId;
-      const order = await SellerOrders.findOne({ "carts._id": cartId });
-  
-      // Check if the order exists
-      if (!order) {
-        return res.status(404).json({ message: "Cart not found" });
-      }
-  
-      // Find the specific cart within the order
-      const cartToUpdate = order.carts.find((cart) => cart._id == cartId);
-  
-      // Update isDelivered to true
-      if (cartToUpdate) {
-        cartToUpdate.isDeliverd = true;
-      } else {
-        return res.status(404).json({ message: "Cart not found" });
-      }
-  
-      // Save the updated order
-      await order.save();
+
+    const bookIdToUpdate = req.params.book_id; 
+
+    const deliverdOrder = await  SellerOrders.updateOne(
+      {
+        "carts.book_id": bookIdToUpdate,
+      },
+      {
+        $set: {
+          "carts.$.isDeliverd": true,
+        },
+      });
+
+      await Orders.updateOne(
+        {
+          "carts.book_id": bookIdToUpdate,
+        },
+        {
+          $set: {
+            "carts.$.isDeliverd": true,
+          },
+        });
   
       // Respond with the updated order
-      res.json({ message: "Cart updated successfully", order });
+      res.json({ message: "Cart updated successfully", deliverdOrder });
   }catch (error) {
     console.error("Error order delivery data:", error);
     res.status(500).json({ message: "Internal server error" });
