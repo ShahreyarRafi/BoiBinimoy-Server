@@ -1,5 +1,4 @@
 const Orders = require("../../Models/Orders/Orders");
-const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
 // get total orders
 exports.getTotalOrders = async (req, res) => {
@@ -12,22 +11,15 @@ exports.getTotalOrders = async (req, res) => {
   }
 };
 
-// get total sales
+// get total sales controller
 exports.getTotalSales = async (req, res) => {
   try {
     const orders = await Orders.find();
     let totalSales = 0;
 
-    for (const order of orders) {
-      for (const cart of order.carts) {
-        const book = await BuyBooks.findById(cart.book_id);
-        if (book) {
-          totalSales += book.price * cart.quantity;
-        } else {
-          console.error(`Book not found for cart with ID: ${cart.book_id}`);
-        }
-      }
-    }
+    orders.forEach((order) => {
+      totalSales += order.totalPrice;
+    });
 
     res.send({ totalSales });
   } catch (error) {
