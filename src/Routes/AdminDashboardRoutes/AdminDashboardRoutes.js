@@ -5,6 +5,7 @@ const {
   getLowStockBooks,
   getRecentOrderedBooks,
   getTopSellingBooks,
+  getTopBuyingCustomers,
 } = require("../../Controller/AdminDashboardController/AdminDashboardController");
 
 const adminDashboardRouters = express.Router();
@@ -23,5 +24,8 @@ adminDashboardRouters.get("/recent-ordered-books", getRecentOrderedBooks);
 
 // get 10 top  selling books router
 adminDashboardRouters.get("/top-selling-books", getTopSellingBooks);
+
+// get 10 top buying  custommer  router
+adminDashboardRouters.get("/top-buying-customers", getTopBuyingCustomers);
 
 module.exports = adminDashboardRouters;
