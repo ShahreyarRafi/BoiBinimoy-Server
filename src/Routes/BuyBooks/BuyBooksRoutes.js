@@ -11,9 +11,11 @@ const {
   getBooksByWriter,
   getBooksByLanguage,
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
+const BuyBooks = require("../../Models/buyBooks/buyBooks");
 const buyBookRouter = express.Router();
 
 // get all buy-books
+
 buyBookRouter.get("/buy-books", getAllBuyBookController);
 
 // get a buy-books by id

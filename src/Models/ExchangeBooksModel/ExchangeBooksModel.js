@@ -6,6 +6,7 @@ const ExchangeBooksSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: String,
     writer: String,
     description: String,
     publication_year: Number,

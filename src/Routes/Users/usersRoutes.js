@@ -4,10 +4,11 @@ const {
   getOneUserController,
   postUserController,
   updateUser,
+  getUserRoles,
+  updateUserInterest
 } = require("../../Controller/UsersControllers/UsersControllers");
 const verifyAdmin = require("../../Middleware/VerifyAdmin/VerifyAdmin");
 const verifyToken = require("../../Middleware/verifyToken");
-const Users = require("../../Models/Users/Users");
 const usersRoute = express.Router();
 
 // get all users
@@ -23,8 +24,11 @@ usersRoute.post("/users", postUserController);
 // update a user
 usersRoute.patch("/users/:id", updateUser);
 
+// update a user interest
+usersRoute.patch("/users-interest/:email", updateUserInterest);
+
 // get admin
-usersRoute.get("/users/admin/:email")
+usersRoute.get("/users/roles/:email", getUserRoles)
 
 module.exports = usersRoute;
 

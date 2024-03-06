@@ -21,6 +21,6 @@ writerRouter.post("/writers", addWriter);
 writerRouter.patch("/writers/:id", updateWriter);
 
 // delete a writer  router
-writerRouter.delete("/writers", deleteWriter);
+writerRouter.delete("/writers/:id", deleteWriter);
 
 module.exports = writerRouter;

@@ -3,10 +3,40 @@ const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
 // controller for get all buy books
 exports.getAllBuyBookController = async (req, res) => {
+  const page = parseInt(req.query?.page) || 1;
+  const limit = parseInt(req.query?.limit) || 14;
+  console.log("page:", page, "limit", limit);
   try {
-    const result = await BuyBooks.find();
-    res.send(result);
+    const totalBook = await BuyBooks.countDocuments();
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const pagination = {};
+    if (endIndex < totalBook) {
+      pagination.next = {
+        page: page + 1,
+        limit: limit,
+      };
+    }
+    if (startIndex > 0) {
+      pagination.prev = {
+        page: page - 1,
+        limit: limit,
+      };
+    }
+
+    const aggregationPipline = [
+      {
+        $skip: startIndex,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    const buyBooks = await BuyBooks.aggregate(aggregationPipline);
+    res.send({totalBook,  buyBooks });
   } catch (error) {
+    console.log(error);
     console.error("Error getting buy books data:", error);
     res.status(500).json({ message: "Internal server error" });
   }
