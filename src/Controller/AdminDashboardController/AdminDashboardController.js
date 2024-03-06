@@ -39,3 +39,29 @@ exports.getLowStockBooks = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+// get recent order with books
+exports.getRecentOrdersWithBooks = async (req, res) => {
+  try {
+    // find 10 most recent orders
+    const recentOrders = await Orders.find().sort({ orderDate: -1 }).limit(10);
+
+    // populated  book details for each order
+    const populatedOrders = await Promise.all(
+      recentOrders.map(async (order) => {
+        const populatedCarts = await Promise.all(
+          order.carts.map(async (cart) => {
+            const book = await BuyBooks.findById(cart.book_id);
+            return { ...cart.toObject(), book };
+          })
+        );
+        return { ...order.toObject(), carts: populatedCarts };
+      })
+    );
+
+    res.send({ recentOrders: populatedOrders });
+  } catch (error) {
+    console.error("Error getting recent orders with books:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -3,6 +3,7 @@ const {
   getTotalOrders,
   getTotalSales,
   getLowStockBooks,
+  getRecentOrdersWithBooks,
 } = require("../../Controller/AdminDashboardController/AdminDashboardController");
 
 const adminDashboardRouters = express.Router();
@@ -15,5 +16,11 @@ adminDashboardRouters.get("/total-sales", getTotalSales);
 
 // get low stokes books router
 adminDashboardRouters.get("/low-stock-books", getLowStockBooks);
+
+// get 5 recent order books router
+adminDashboardRouters.get(
+  "/recent-orders-with-books",
+  getRecentOrdersWithBooks
+);
 
 module.exports = adminDashboardRouters;
