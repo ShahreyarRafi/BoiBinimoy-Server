@@ -48,9 +48,5 @@ buyBookRouter.get("/writer/:writer", getBooksByWriter);
 buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 
-buyBookRouter.get("/buyBooks", async(req, res) => {
-    const result = await BuyBooks.find();
-    res.send(result);
-})
 
 module.exports = buyBookRouter;

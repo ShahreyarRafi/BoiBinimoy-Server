@@ -1,5 +1,6 @@
 const express = require("express");
 const { getMyCarts, getOneCart, addToCart, deleteACart, deleteMyCarts, updateCart } = require("../../Controller/CartsControllers/CartsControllers");
+const Carts = require("../../Models/Carts/Carts");
 
 const CartsRouter = express.Router();
 
@@ -21,6 +22,8 @@ CartsRouter.delete("/delete-cart/:id", deleteACart);
 
 // delete my all carts
 CartsRouter.delete("/delete-my-carts/:email", deleteMyCarts);
+
+
 
 
 module.exports = CartsRouter;
