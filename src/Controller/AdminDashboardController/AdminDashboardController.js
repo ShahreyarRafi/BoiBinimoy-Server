@@ -1,4 +1,5 @@
 const Orders = require("../../Models/Orders/Orders");
+const Users = require("../../Models/Users/Users");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
 
 // get total orders
@@ -93,7 +94,18 @@ exports.getTopSellingBooks = async (req, res) => {
       { $limit: 10 },
     ]);
 
-    res.send({ topSellingBooks });
+    const topSellingBooksDetails = await Promise.all(
+      topSellingBooks.map(async (book) => {
+        const bookDetails = await BuyBooks.findById(book._id);
+        return {
+          bookId: book._id,
+          totalQuantity: book.totalQuantity,
+          bookDetails,
+        };
+      })
+    );
+
+    res.send({ topSellingBooks: topSellingBooksDetails });
   } catch (error) {
     console.error("Error getting top selling books:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -107,14 +119,28 @@ exports.getTopBuyingCustomers = async (req, res) => {
       {
         $group: {
           _id: "$clientEmail",
-          totalPurchaseAmount: { $sum: "$totalPrice" },
+          totalPurchases: { $sum: "$totalPrice" },
         },
       },
-      { $sort: { totalPurchaseAmount: -1 } },
+      { $sort: { totalPurchases: -1 } },
       { $limit: 10 },
     ]);
 
-    res.send({ topBuyingCustomers });
+    const populatedTopBuyingCustomers = await Promise.all(
+      topBuyingCustomers.map(async (customer) => {
+        const userDetails = await Users.findOne({ email: customer._id });
+        return {
+          email: userDetails.email,
+          name: userDetails.name,
+          image: userDetails.image,
+          gender: userDetails.gender,
+          totalPurchases: customer.totalPurchases,
+          // Add other user details you want to include
+        };
+      })
+    );
+
+    res.json({ topBuyingCustomers: populatedTopBuyingCustomers });
   } catch (error) {
     console.error("Error getting top buying customers:", error);
     res.status(500).json({ message: "Internal server error" });
