@@ -21,9 +21,7 @@ const ExchangeBooksSchema = new mongoose.Schema({
     dimensions: Object,
     size: Number,
     time_frame: Number,
-    formats : Array,
     rating : Number,
-    tags : Array,
     cover_image : String,
     condition: String,
     exchange_status: String,
@@ -33,4 +31,4 @@ const ExchangeBooksSchema = new mongoose.Schema({
     location : Object,
 });
 
-module.exports = mongoose.model('ExchangeBook', ExchangeBooksSchema);
+module.exports = mongoose.model('ExchangeBooks', ExchangeBooksSchema);

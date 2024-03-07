@@ -17,6 +17,7 @@ const BuyBooksSchema = new Schema({
     type: String,
     required: true,
   },
+  published_year: Number,
   recommended_age: {
     type: String,
   },

@@ -154,7 +154,7 @@ exports.getBooksByLanguage = async (req, res) => {
   try {
     const language = new RegExp(req.params.language, "i");
     const books = await BuyBooks.find({ language });
-    res.json(books);
+    res.send(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -163,13 +163,14 @@ exports.getBooksByLanguage = async (req, res) => {
 // query book by title
 exports.getBooksByName = async (req, res) => {
   try {
-    const bookName = req.params.bookName;
+    const bookName = req.query?.bookName || "";
+    console.log("book name",bookName)
 
     const books = await BuyBooks.find({
       title: { $regex: bookName, $options: "i" },
     });
 
-    res.send({ books });
+    res.send( books );
   } catch (error) {
     console.error("Error querying books by name:", error);
     res.status(500).json({ message: "Internal server error" });
