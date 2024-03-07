@@ -51,7 +51,7 @@ buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 
 // router to query book by book name
-buyBookRouter.get("/books/:bookName", getBooksByName);
+buyBookRouter.get("/books", getBooksByName);
 
 
 buyBookRouter.get("/buyBooks", async(req, res) => {
