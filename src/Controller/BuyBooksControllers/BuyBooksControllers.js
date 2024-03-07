@@ -34,7 +34,7 @@ exports.getAllBuyBookController = async (req, res) => {
       },
     ];
     const buyBooks = await BuyBooks.aggregate(aggregationPipline);
-    res.send({totalBook,  buyBooks });
+    res.send({ totalBook, buyBooks });
   } catch (error) {
     console.log(error);
     console.error("Error getting buy books data:", error);
@@ -157,5 +157,21 @@ exports.getBooksByLanguage = async (req, res) => {
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// query book by title
+exports.getBooksByName = async (req, res) => {
+  try {
+    const bookName = req.params.bookName;
+
+    const books = await BuyBooks.find({
+      title: { $regex: bookName, $options: "i" },
+    });
+
+    res.send({ books });
+  } catch (error) {
+    console.error("Error querying books by name:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
