@@ -49,7 +49,15 @@ buyBookRouter.get("/writer/:writer", getBooksByWriter);
 // router to query books by language
 buyBookRouter.get("/language/:language", getBooksByLanguage);
 
+
 // router to query book by book name
 buyBookRouter.get("/books/:bookName", getBooksByName);
+
+
+buyBookRouter.get("/buyBooks", async(req, res) => {
+    const result = await BuyBooks.find();
+    res.send(result);
+})
+
 
 module.exports = buyBookRouter;
