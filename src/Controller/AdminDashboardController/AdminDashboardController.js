@@ -29,6 +29,18 @@ exports.getTotalSales = async (req, res) => {
   }
 };
 
+// get total custtomer
+exports.getTotalCustomers = async (req, res) => {
+  try {
+    const totalCustomers = await Orders.distinct("user_email").countDocuments();
+
+    res.send({ totalCustomers });
+  } catch (error) {
+    console.error("Error getting total customers:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 // get low stock limit books
 exports.getLowStockBooks = async (req, res) => {
   try {
