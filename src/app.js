@@ -8,8 +8,6 @@ const { rateLimit } = require("express-rate-limit");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-
-
 const corsOptions = {
   origin: [
     "*",
@@ -24,7 +22,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-
 
 const jwtRoute = require("./Routes/jwt/jwtRoute");
 const bannerRouter = require("./Routes/BannerRoutes/BannerRoutes");
@@ -43,7 +40,8 @@ const OrdersRouter = require("./Routes/OrdersRouter/OrdersRouter");
 const SellerOrdersRouter = require("./Routes/SellerOrdersRouter/SellerOrdersRouter");
 const messageRouter = require("./Routes/MessageRouter/MessageRouter");
 const wishlistRouter = require("./Routes/WishlistRouter/WishlistRouter");
-
+const adminDashboardRouters = require("./Routes/AdminDashboardRoutes/AdminDashboardRoutes");
+const userDashboardRouters = require("./Routes/UserDashboardRouters/UserDashboardRouters");
 
 // middleware
 app.use(morgan("dev"));
@@ -105,15 +103,20 @@ app.use("/api/v1", publisherRouter);
 // payment related routes
 app.use("/api/v1", PaymentRouter);
 
-
 // Orders related api
 app.use("/api/v1", OrdersRouter);
 
-// seller orders router 
+// seller orders router
 app.use("/api/v1", SellerOrdersRouter);
 
 // wishlist related apis
 app.use("/api/v1", wishlistRouter);
+
+// admin dashboard related apis
+app.use("/api/v1", adminDashboardRouters);
+
+// user dashboard related apis
+app.use("/api/v1", userDashboardRouters);
 
 app.get("*", (req, res) => {
   res.status(401).json({ message: "Sorry Invalid URL" });
