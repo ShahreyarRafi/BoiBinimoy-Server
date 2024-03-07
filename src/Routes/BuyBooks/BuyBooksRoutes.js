@@ -8,8 +8,10 @@ const {
   getIndividualBookController,
   getBooksByCategory,
   getBooksByPublisher,
-  getBooksByWriter,
+
   getBooksByLanguage,
+  getBooksByName,
+  getBooksByWriter,
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
 const buyBookRouter = express.Router();
@@ -46,5 +48,8 @@ buyBookRouter.get("/writer/:writer", getBooksByWriter);
 
 // router to query books by language
 buyBookRouter.get("/language/:language", getBooksByLanguage);
+
+// router to query book by book name
+buyBookRouter.get("/books/:bookName", getBooksByName);
 
 module.exports = buyBookRouter;
