@@ -10,6 +10,8 @@ const {
 } = require("../../Controller/ExchangeBooksController/ExchangeBooksController");
 const verifyToken = require("../../Middleware/verifyToken");
 const exchangeBooksRouter = express.Router();
+const ExchangeBooks = require("../../Models/ExchangeBooksModel/ExchangeBooksModel");
+
 
 // Get all exchangable books
 exchangeBooksRouter.get("/exchange-books", getAllBooks);
@@ -31,6 +33,12 @@ exchangeBooksRouter.put("/exchange-books/:id", updateBook);
 
 // Delete a exchangable book
 exchangeBooksRouter.delete("/exchange-books/:id", deleteBook);
+
+// Delete a exchangable book
+exchangeBooksRouter.get("/exchange-book", async(req, res) => {
+  const book = await ExchangeBooks.find();
+  res.send(book)
+});
 
 // Delete all exchangable books (use with caution)
 // exchangeBooksRouter.delete("/exchange-books", deleteAllBooks);

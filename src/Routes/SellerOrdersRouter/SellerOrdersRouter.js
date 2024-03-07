@@ -1,6 +1,5 @@
 const express = require("express");
 const { getSellerOrdersByEmail, updateDelivery } = require("../../Controller/SellerOrdersControllers/SellerOrdersControllers");
-const SellerOrders = require("../../Models/SellerOrders/SellerOrders");
 const SellerOrdersRouter = express.Router();
 
 

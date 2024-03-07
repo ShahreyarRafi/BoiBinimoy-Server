@@ -4,7 +4,8 @@ const RequestBooks = require("../../Models/RequestBooks/RequestBooks");
 exports.getAllRequestBooksController = async (req, res) => {
   try {
     const requestBooks = await RequestBooks.find();
-    res.send(requestBooks);
+    const totalRequest = await RequestBooks.countDocuments();
+    res.send({requestBooks, totalRequest });
   } catch (error) {
     console.error("Error getting all request books data:", error);
     res.status(500).json({ message: "Internal server error" });
