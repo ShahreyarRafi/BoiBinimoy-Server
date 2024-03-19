@@ -12,6 +12,7 @@ const {
   getBooksByLanguage,
   getBooksByName,
   getBooksByWriter,
+  getSuggestedBooks,
 } = require("../../Controller/BuyBooksControllers/BuyBooksControllers");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
 const buyBookRouter = express.Router();
@@ -52,6 +53,9 @@ buyBookRouter.get("/language/:language", getBooksByLanguage);
 
 // router to query book by book name
 buyBookRouter.get("/books", getBooksByName);
+
+// router to query books by user interest
+// buyBookRouter.get("/suggestedBooks", getSuggestedBooks);
 
 
 buyBookRouter.get("/buyBooks", async(req, res) => {

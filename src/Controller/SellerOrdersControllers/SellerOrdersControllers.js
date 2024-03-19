@@ -8,27 +8,12 @@ exports.getSellerOrdersByEmail = async(req, res) => {
     try{
         const email = req.params.email;
         const query = {ownerEmail: email };
-        const orders = await SellerOrders.find(query);
+        const orders = await SellerOrders.find(query).sort({ orderDate: -1 });
         const sellerOrders = [];
         orders.forEach((order) => {
           const cartsInOrder = order.carts;
           sellerOrders.push(...cartsInOrder);
         });
-      
-        // const bookPromises = allCarts.map(async (cart) => {
-        //   const id = cart?.book_id || "";
-        //   const book = await BuyBooks.findById(id) || {};
-        //   return book;
-        // });
-    
-        // const books = await Promise.all(bookPromises);
-        
-        // const sellerOrders = allCarts.map((cart, index) => {
-        //   return {
-        //     cart,
-        //     book: books[index] || "book not found"
-        //   }
-        // }) 
         
         res.send({orders, sellerOrders})
 

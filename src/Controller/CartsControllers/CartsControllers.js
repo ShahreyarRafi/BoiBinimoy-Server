@@ -54,8 +54,11 @@ exports.getOneCart = async (req, res) => {
 exports.addToCart = async (req, res) => {
   try {
     const cart = req.body;
-    const query = { book_id: cart?.book_id };
-    const existingBook = await Carts.findOne(query);
+    const email = req.query.email;
+    const filter = {user_email: email};
+    const carts = await Carts.find(filter);
+    const existingBook = carts.find((item) => item.book_id === cart?.book_id);
+    
     if (existingBook) {
       return res.send({ message: "This book already exists", insertedId: null });
     }

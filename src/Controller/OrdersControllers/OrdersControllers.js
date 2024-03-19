@@ -6,10 +6,12 @@ exports.getMyOrders = async (req, res) => {
   try {
     const email = req.params.email;
     const filter = { clientEmail: email };
-    const orders = await Orders.find(filter);
+    const orders = await Orders.find(filter).sort({orderDate: -1});
     const myOrders = [];
+    let totalSell = 0;
 
     orders.forEach((order) => {
+      totalSell += order?.totalBooks;
       const cartsInOrder = order.carts;
       myOrders.push(...cartsInOrder);
     });
@@ -50,3 +52,23 @@ exports.getSellerOrders = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
+exports.getTotalBooksSold = async(req, res) => {
+  try{
+    const orders = await Orders.find();
+
+    let totalBooksSold = 0;
+    orders.forEach((order) => {
+      order.carts.forEach((cartItem) => {
+        totalBooksSold += cartItem.quantity;
+      });
+    });
+
+    res.status(200).json({ totalBooksSold });
+  }  catch (error) {
+    console.error("Error getting my orders data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

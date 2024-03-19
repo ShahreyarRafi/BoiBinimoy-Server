@@ -1,5 +1,6 @@
 const { mongoose } = require("mongoose");
 const BuyBooks = require("../../Models/buyBooks/buyBooks");
+const Users = require("../../Models/Users/Users");
 
 // controller for get all buy books
 exports.getAllBuyBookController = async (req, res) => {
@@ -160,17 +161,43 @@ exports.getBooksByLanguage = async (req, res) => {
   }
 };
 
+// get suggested books by user interest
+exports.getSuggestedBooks = async (req, res) => {
+  try {
+    const userEmail = req.query.email;
+    let books = []
+    if(userEmail){
+      const user = await Users.findOne({email: userEmail});
+      const { category, writer, publisher, book } = user.interest;
+  
+      // Find books that match user interests
+      books = await BuyBooks.find({
+        $or: [
+          { category: { $in: category } },
+          { writer: { $in: writer } },
+          { publisher: { $in: publisher } },
+          { _id: { $in: book } },
+        ],
+      });
+    }
+    res.send(books)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // query book by title
 exports.getBooksByName = async (req, res) => {
   try {
     const bookName = req.query?.bookName || "";
-    console.log("book name",bookName)
+    console.log("book name", bookName);
 
     const books = await BuyBooks.find({
       title: { $regex: bookName, $options: "i" },
     });
 
-    res.send( books );
+    res.send(books);
   } catch (error) {
     console.error("Error querying books by name:", error);
     res.status(500).json({ message: "Internal server error" });
